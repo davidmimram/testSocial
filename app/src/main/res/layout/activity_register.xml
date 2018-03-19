@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ind.david.finalproject.RegisterActivity">
+
+    <ImageView
+        android:id="@+id/registar_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="49dp"
+        android:paddingTop="1dp"
+        app:srcCompat="@drawable/bitmap_copy" />
+
+    <EditText
+        android:id="@+id/register_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/registar_icon"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/email"
+        android:background="@drawable/inputs"/>
+
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/password"
+        android:background="@drawable/inputs"/>
+
+    <EditText
+        android:id="@+id/register_password_confiromd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/register_password"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:hint="confird Passowrd"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/password"
+        android:background="@drawable/inputs"
+        />
+
+    <Button
+        android:id="@+id/register_create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_password_confiromd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/button"
+        android:padding="10dp"
+        android:paddingTop="5dp"
+        android:text="Create Account"
+        android:textColor="@android:color/white" />
+</RelativeLayout>
