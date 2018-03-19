@@ -63,18 +63,20 @@ public class MainActivity extends AppCompatActivity {
         AddNewPostButton = (ImageView) findViewById(R.id.new_post_uploade);
         postList = (RecyclerView) findViewById(R.id.all_user_post_list);
         postList.setHasFixedSize(true);
+
+        //todo: oz changed a few things!
+/*
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
+*/
 
         /*
         mToolBar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolBar);
         getSupportActionBar().setTitle("Home")*/
         ;
-
-
 
 
     }
