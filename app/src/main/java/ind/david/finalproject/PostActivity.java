@@ -177,7 +177,7 @@ public class PostActivity extends AppCompatActivity {
                     postMap.put("description",Descripition);
                     postMap.put("postimage",downloadUrl);
                     postMap.put("profileImage",profileImage);
-                    postMap.put("full name",userFullName);
+                    postMap.put("full_name",userFullName);
                     PostsRef.child(current_user_id + postRandomName).updateChildren(postMap).addOnCompleteListener
                             (new OnCompleteListener() {
                         @Override

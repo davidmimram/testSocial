@@ -9,6 +9,7 @@ public class Post
     public String date,description,fullname,postimage,profileImage,time,uid;
 
     public Post() {}
+
     public Post(String date, String description, String fullname, String postimage, String profileImage, String time, String uid) {
         this.date = date;
         this.description = description;
@@ -82,7 +83,7 @@ public class Post
         return "Post{" +
                 "date='" + date + '\'' +
                 ", description='" + description + '\'' +
-                ", fullname='" + fullname + '\'' +
+                ", full_name='" + fullname + '\'' +
                 ", postimage='" + postimage + '\'' +
                 ", profileImage='" + profileImage + '\'' +
                 ", time='" + time + '\'' +

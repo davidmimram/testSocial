@@ -233,7 +233,7 @@ public class SetupActivity extends AppCompatActivity {
             // מאחסן בדה בייס - פיירבייס
             HashMap userMap = new HashMap();
             userMap.put("user name",username);
-            userMap.put("full name",fullname);
+            userMap.put("full_name",fullname);
             userMap.put("country",country);
             // כאן נוכל לקחת עוד מידע מהשתמש כמו למשל ביוגרפיה או כל דבר אחר
              userMap.put("status","this is post msg");

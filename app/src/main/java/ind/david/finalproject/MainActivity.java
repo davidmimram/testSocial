@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     //-----------------------------------
     private FirebaseAuth mAuth;
     private DatabaseReference UserRef,PostRef;
+    private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter;
 
     //    private Toolbar mToolBar;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,11 +76,15 @@ public class MainActivity extends AppCompatActivity {
          * fix 1: enable these methods to show the posts. make sure your DisplayallUserPost();
          * running at the end of them
          */
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-         linearLayoutManager.setReverseLayout(false);
-        linearLayoutManager.setStackFromEnd(false);
-        postList.setLayoutManager(linearLayoutManager);
+
         DisplayallUserPost();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postList.setLayoutManager(linearLayoutManager);
+        postList.setAdapter(firebaseRecycleAdepter);
+
 
         /*
         mToolBar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -145,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     private void DisplayallUserPost() {
 
         try {
-            FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter =
+            firebaseRecycleAdepter =
                     new FirebaseRecyclerAdapter<Post, PostViewHolder>(
                             Post.class,
                             R.layout.all_post_layout,

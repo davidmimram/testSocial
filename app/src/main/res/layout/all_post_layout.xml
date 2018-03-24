@@ -30,9 +30,12 @@
 
         <ImageView
             android:id="@+id/post_image"
-            android:layout_width="361dp"
-            android:layout_height="324dp"
+            android:layout_width="wrap_content"
+            android:layout_height="320dp"
             android:layout_margin="3dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitCenter"
+            android:src="@drawable/breshka"
             android:adjustViewBounds="true"/>
 
 
