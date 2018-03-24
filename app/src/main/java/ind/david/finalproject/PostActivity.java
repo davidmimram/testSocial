@@ -92,8 +92,7 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    private void ValiDatePostInfo()
-    {
+    private void ValiDatePostInfo() {
         Descripition = postDescripition.getText().toString();
         if(ImageUri == null)
         {

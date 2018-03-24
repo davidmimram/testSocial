@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (ImageView) findViewById(R.id.new_post_uploade);
+
+
+        //todo: david changed a few things!
+
         postList = (RecyclerView) findViewById(R.id.all_user_post_list);
         postList.setHasFixedSize(true);
 
@@ -70,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
          * running at the end of them
          */
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
+         linearLayoutManager.setReverseLayout(false);
+        linearLayoutManager.setStackFromEnd(false);
         postList.setLayoutManager(linearLayoutManager);
         DisplayallUserPost();
 
@@ -109,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
     UserRef.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            if (!dataSnapshot.hasChild(current_user_id))
-            {
+            if (!dataSnapshot.hasChild(current_user_id))  {
                 SendUserToActivity();
 
                 //--------firday----///
@@ -123,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+            } else {
                 DisplayallUserPost();
             }
 
@@ -137,32 +142,31 @@ public class MainActivity extends AppCompatActivity {
     });
     }
 
-    private void DisplayallUserPost()
-    {
-        FirebaseRecyclerAdapter<Post,PostViewHolder> firebaseRecycleAdepter =
-                new FirebaseRecyclerAdapter<Post, PostViewHolder>
-                        (
-                                Post.class,
-                                R.layout.all_post_layout,
-                                PostViewHolder.class,
-                                PostRef
+    private void DisplayallUserPost() {
 
-                        )
-                {
-                    @Override
-                    protected void populateViewHolder(PostViewHolder viewHolder, Post model, int position)
-                    {
-                    viewHolder.setFullname(model.getFullname());
-                    viewHolder.setTime(model.getTime());
-                    viewHolder.setDate(model.getDate());
-                    viewHolder.setDescription(model.getDescription());
-                    viewHolder.setProfileimage(getApplicationContext(), model.getProfileimage());
-                    viewHolder.setPostimage(getApplicationContext(),model.getPostimage());
+        try {
+            FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter =
+                    new FirebaseRecyclerAdapter<Post, PostViewHolder>(
+                            Post.class,
+                            R.layout.all_post_layout,
+                            PostViewHolder.class,
+                            PostRef) {
+                        @Override
+                        protected void populateViewHolder(PostViewHolder viewHolder, Post model, int position) {
+                            viewHolder.setFullname(model.getFullname());
+                            viewHolder.setTime(model.getTime());
+                            viewHolder.setDate(model.getDate());
+                            viewHolder.setDescription(model.getDescription());
+                            viewHolder.setProfileImage(getApplicationContext(), model.getProfileImage());
+                            viewHolder.setPostimage(getApplicationContext(), model.getPostimage());
 
 
-                    }
-                };
-        postList.setAdapter(firebaseRecycleAdepter);
+                        }
+                    };
+            postList.setAdapter(firebaseRecycleAdepter);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -184,11 +188,11 @@ public class MainActivity extends AppCompatActivity {
             username.setText(fullname);
         }
 
-        public void setProfileimage(Context ctx ,String profileimage)
+        public void setProfileImage(Context ctx ,String profileImage)
         {
 
             CircleImageView imageView = (CircleImageView) mView.findViewById(R.id.post_profile_image);
-            Picasso.with(ctx).load(profileimage).into(imageView);
+            Picasso.with(ctx).load(profileImage).into(imageView);
 
         }
 
@@ -213,10 +217,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void setPostimage(Context ctx, String postimage)
+        public void setPostimage(Context ctx, String postimages)
         {
             ImageView Postimage = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(ctx).load(postimage).into(Postimage);
+            Picasso.with(ctx).load(postimages).into(Postimage);
+//            Postimage.getLayoutParams().height = 321; // OR
+//            Postimage.getLayoutParams().width = 361;
         }
     }
 

@@ -14,13 +14,8 @@
 
         <include
             android:id="@+id/main_page_toolbar"
-            layout="@layout/app_bar_layout"/>
-
-        <include
-            android:id="@+id/mainbootom_app_bar"
-            layout="@layout/app_barbottom_layout"/>
-
-
+            layout="@layout/app_bar_layout"
+            />
 
         <FrameLayout
             android:id="@+id/main_contanior"
@@ -34,6 +29,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>
+
+        <include
+            android:id="@+id/mainbootom_app_bar"
+            layout="@layout/app_barbottom_layout"/>
+
+
     </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>
