@@ -64,13 +64,16 @@ public class MainActivity extends AppCompatActivity {
         postList = (RecyclerView) findViewById(R.id.all_user_post_list);
         postList.setHasFixedSize(true);
 
-        //todo: oz changed a few things!
-/*
+        /*
+         * todo oz:
+         * fix 1: enable these methods to show the posts. make sure your DisplayallUserPost();
+         * running at the end of them
+         */
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
-*/
+        DisplayallUserPost();
 
         /*
         mToolBar = (Toolbar) findViewById(R.id.main_page_toolbar);

@@ -6,7 +6,6 @@
     android:layout_height="70dp"
     android:layout_marginTop="560dp"
     android:background="#FDFDFD"
-
     android:src="@drawable/bitmap_copy">
 
 
