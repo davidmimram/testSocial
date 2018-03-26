@@ -69,17 +69,28 @@ public class LoginActivity extends AppCompatActivity {
                 // פתיחת מתודה!
                 SendUserToRegisterActivity();
 
+
+
+
+
             }
 
         });
+
         LoginButton .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-            AllowingUserToLogin(); //  מתודה קריאה למתודה שיצרנו
+                try {
+                    AllowingUserToLogin(); //  מתודה קריאה למתודה שיצרנו
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -94,8 +105,8 @@ public class LoginActivity extends AppCompatActivity {
         })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
 
-    }
 
+    }
 
 
 
@@ -215,12 +226,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
     private void SendUserToRegisterActivity() {
-        Intent registerIntent = new Intent(LoginActivity.this,RegisterActivity.class);
-        startActivity(registerIntent);
+        Intent registert = new Intent(LoginActivity.this, RegisterActivity.class);
+        registert.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(registert);
+
 
 
     }
+
+
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 }

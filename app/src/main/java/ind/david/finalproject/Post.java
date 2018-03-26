@@ -6,7 +6,7 @@ package ind.david.finalproject;
 
 public class Post
 {
-    public String date,description,full_name,postimage,profileImage,time,uid;
+    public String date,description,full_name,postimages,profileImage,time,uid;
 
     public Post() {}
 
@@ -14,7 +14,7 @@ public class Post
         this.date = date;
         this.description = description;
         this.full_name = fullname;
-        this.postimage = postimage;
+        this.postimages = postimage;
         this.profileImage = profileImage;
         this.time = time;
         this.uid = uid;
@@ -47,11 +47,11 @@ public class Post
     }
 
     public String getPostimage() {
-        return postimage;
+        return postimages;
     }
 
     public void setPostimage(String postimage) {
-        this.postimage = postimage;
+        this.postimages = postimage;
     }
 
     public String getProfileImage() {
@@ -84,7 +84,7 @@ public class Post
                 "date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 ", full_name='" + full_name + '\'' +
-                ", postimage='" + postimage + '\'' +
+                ", postimage='" + postimages + '\'' +
                 ", profileImage='" + profileImage + '\'' +
                 ", time='" + time + '\'' +
                 ", uid='" + uid + '\'' +

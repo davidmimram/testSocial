@@ -134,7 +134,7 @@ public class PostActivity extends AppCompatActivity {
         postRandomName = saveCurrentDate + saveCurrentTime;
 
 
-        StorageReference filePath = PostImagesRefernces.child("postimages").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
+        StorageReference filePath = PostImagesRefernces.child("Posts").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
 
 
         filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -167,7 +167,7 @@ public class PostActivity extends AppCompatActivity {
                 if(dataSnapshot.exists())
                 {
 
-                    String userFullName = dataSnapshot.child("full name").getValue().toString();
+                    String userFullName = dataSnapshot.child("full_name").getValue().toString();
                     String profileImage = dataSnapshot.child("profileImage").getValue().toString();
 
                     HashMap postMap = new HashMap();
@@ -186,7 +186,7 @@ public class PostActivity extends AppCompatActivity {
                             {
 
 
-                             /*   SendUserToActivity();*/
+//                                SendUserToActivity();
 
                                 loadingBar.dismiss();
                                 Toast.makeText(PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show();
