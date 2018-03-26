@@ -34,7 +34,7 @@
 
         <include
             android:id="@+id/mainbootom_app_bar"
-            layout="@layout/app_barbottom_layout"/>
+            layout="@layout/app_bottombar_layout"/>
 
 
     </RelativeLayout>

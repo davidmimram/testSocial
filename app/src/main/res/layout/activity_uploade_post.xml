@@ -8,9 +8,9 @@
 
 
 
-    <include layout="@layout/app_bar_foruploade"
+    <include layout="@layout/app_bar_return_status"
         android:id="@+id/include"></include>
-    <include layout="@layout/app_barbottom_layout"></include>
+    <include layout="@layout/app_bottombar_layout"></include>
 
 
     <ImageButton
