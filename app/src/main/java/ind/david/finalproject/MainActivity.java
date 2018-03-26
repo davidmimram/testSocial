@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+    // מה המצב ??
+    // מה נשמע ??
+    //  מה קורה ??
 
 
 

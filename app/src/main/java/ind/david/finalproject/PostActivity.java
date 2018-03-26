@@ -186,10 +186,13 @@ public class PostActivity extends AppCompatActivity {
                             {
 
 
-//                                SendUserToActivity();
+                                Intent intent = new Intent(PostActivity.this,MainActivity.class);
+                                startActivity(intent);
 
                                 loadingBar.dismiss();
                                 Toast.makeText(PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show();
+
+
                             }
                             else 
                             {
@@ -239,8 +242,10 @@ public class PostActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(PostActivity.this,MainActivity.class);
         startActivity(intent);
+        finish();
 
     }
+
 
     private void SendUserToActivity()
     {
