@@ -3,9 +3,9 @@ package ind.david.finalproject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +30,8 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import id.zelory.compressor.Compressor;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -75,6 +77,7 @@ public class PostActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
 
 
+        Compressor compressor = new Compressor(this);
 
         SelectPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +137,9 @@ public class PostActivity extends AppCompatActivity {
         postRandomName = saveCurrentDate + saveCurrentTime;
 
 
+
+
+
         StorageReference filePath = PostImagesRefernces.child("Posts").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
 
 
@@ -146,6 +152,7 @@ public class PostActivity extends AppCompatActivity {
 
                     downloadUrl = task.getResult().getDownloadUrl().toString();
                     Toast.makeText(PostActivity.this, "התמונה עלתה בהצלחה!", Toast.LENGTH_SHORT).show();
+
 
                     SaveingPostInfomationToDataBase();
                 }
