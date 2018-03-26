@@ -44,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
     //    private Toolbar mToolBar;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<<<<<<< HEAD
 
 
     // בדיקה
+=======
+>>>>>>> 5604e2f11c78fb0251a5d120cb91b386de199c4e
 
     // בלבלבלהלהלהלהלהל
 
