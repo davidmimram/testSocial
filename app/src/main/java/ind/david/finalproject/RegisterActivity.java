@@ -2,18 +2,14 @@ package ind.david.finalproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,137 +19,100 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private EditText UserEmail,UserPassword,UserConmfirodPassword;
-    private Button CreateAccountButton;
-    private ProgressDialog loadingBar;
+    private EditText userEmail,userPassword,userConfirmPassword;
+    private Button btnCreate;
     private FirebaseAuth mAuth;
-
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        mAuth = FirebaseAuth.getInstance(); // < FIREBASE
-        //----------------------------------------
-        UserEmail = (EditText) findViewById(R.id.register_email);
-        UserPassword = (EditText) findViewById(R.id.register_password);
-        UserConmfirodPassword = (EditText) findViewById(R.id.register_password_confiromd);
-        CreateAccountButton = (Button) findViewById(R.id.register_create_account);
-        loadingBar = new ProgressDialog(this);
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        userEmail=(EditText)findViewById(R.id.register_email);
+        userPassword=(EditText)findViewById(R.id.register_password);
+        userConfirmPassword=(EditText)findViewById(R.id.register_password_confiromd);
+        btnCreate=(Button)findViewById(R.id.register_create_account);
+        loadingBar=new ProgressDialog(this);
+        mAuth=FirebaseAuth.getInstance();
 
 
-
-
-        //~~~~~~~~~~~~~~~MetodCreated~~~~~~~~~~~~~~~~~~~~~~~
-        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                CreateNewAccount();
+            public void onClick(View v) {
+                CreateNewAccount ();
             }
         });
+
     }
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // אם יש דאטה זה ידלג על השלב הזה
     @Override
     protected void onStart() {
-        FirebaseUser currectUser = mAuth.getCurrentUser();
-        if (currectUser == null)
-        {
+        super.onStart();
+        FirebaseUser currentUser= mAuth.getCurrentUser();
 
+        if(currentUser != null)
+        {
             SendUserToMainActivity();
         }
-        super.onStart();
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private void SendUserToMainActivity()
-    {
-        Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
+    private void SendUserToMainActivity() {
+        Intent mainIntent=new Intent(RegisterActivity.this,MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
-
-
+        finish();
     }
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 
     private void CreateNewAccount() {
-        String email = UserEmail.getText().toString();
-        String password = UserPassword.getText().toString();
-        String confirmPassword = UserConmfirodPassword.getText().toString();
+        String email=userEmail.getText().toString();
+        String password=userPassword.getText().toString();
+        String confirmPassword=userConfirmPassword.getText().toString();
 
-
-        if(TextUtils.isEmpty(email))
-        {
-            Toast.makeText(this, "הכנס אימייל", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"please write your email...",Toast.LENGTH_SHORT).show();
         }
-
-        else if(TextUtils.isEmpty(password))
-        {
-            Toast.makeText(this, "הכנס סיסמא", Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"please write your password...",Toast.LENGTH_SHORT).show();
         }
-
-        else if(TextUtils.isEmpty(confirmPassword))
-        {
-            Toast.makeText(this, "אנא אשר את הסיסמא", Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(confirmPassword)) {
+            Toast.makeText(this, "please confirm your password...", Toast.LENGTH_SHORT).show();
         }
-        else if(!password.equals(confirmPassword))
+        else if(!password.equals(confirmPassword) )
         {
-            Toast.makeText(this, "סיסמא אינה תואמת לסיסמאת אימות", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(this, "your password do not match your confirm password...", Toast.LENGTH_SHORT).show();
         }
         else
-            {
-                //------------------------------------
-                // תיבה מה קורה בזמן שנוצר החשבון
-                loadingBar.setTitle("יוצר חשבון חדש");
-                loadingBar.setMessage("אנא המתן...");
-                loadingBar.show();
-                loadingBar.setCanceledOnTouchOutside(true);
-                //------------------------------------
+            loadingBar.setTitle("creating New Account");
+        loadingBar.setMessage("please wait,while we are creating your new Account");
+        loadingBar.show();
+        loadingBar.setCanceledOnTouchOutside(true);
 
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        {mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        //~~~ אם הכניסה הצליחה ~~~~
-                        SendUserToSetupActivity();
-
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(RegisterActivity.this, "התחברת בהצלחה", Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-                        }
-                        else {
-                            String message = task.getException().getMessage();
-                            Toast.makeText(RegisterActivity.this,  "הכניסה נכשלה" +message, Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-                        }
-                    }
-                });
+                if(task.isSuccessful()){
+                    SendUserToSetupActivity();
+                    Toast.makeText(RegisterActivity.this,"you are authenticated successfully!",Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
+                }
+                else{
+                    String message=task.getException().getMessage();
+                    Toast.makeText(RegisterActivity.this,"Error occurred: "+ message,Toast.LENGTH_SHORT);
+                    loadingBar.dismiss();
+                }
+            }
+        });
         }
-
     }
 
-    //~~~~~~~~~~~~~~~~~~~~מתודה שתעביר שהכניסה הצליחה~~~~~~~~~~~~
-    private void SendUserToSetupActivity()
-    {
-        Intent setupIntent = new Intent(RegisterActivity.this,SetupActivity.class);
-        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    private void SendUserToSetupActivity() {
+        Intent setupIntent=new Intent(RegisterActivity.this,SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(setupIntent);
         finish();
     }
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 }
