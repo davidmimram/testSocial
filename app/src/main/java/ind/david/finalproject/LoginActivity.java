@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,6 +27,11 @@ public class LoginActivity extends AppCompatActivity {
     private Button LoginButton;
 
     private FirebaseAuth mAuth;
+    private static final int RC_SIGN_IN = 1;
+
+    private GoogleApiClient mGoogleSignInClient;
+    private static final String TAG = "LoginActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

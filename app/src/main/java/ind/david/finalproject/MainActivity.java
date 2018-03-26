@@ -2,10 +2,10 @@ package ind.david.finalproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         postList = (RecyclerView) findViewById(R.id.all_user_post_list);
         postList.setHasFixedSize(true);
 
+
         /*
          * todo oz:
          * fix 1: enable these methods to show the posts. make sure your DisplayallUserPost();
@@ -126,10 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 AddNewPostButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                     SendUserToPostActivity();
-
-
+                        SendUserToPostActivity();
                     }
                 });
 
@@ -175,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 
     public static class PostViewHolder extends RecyclerView.ViewHolder
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
     public void center(View view) {
         Intent intent = new Intent(MainActivity.this,PostActivity.class);
         startActivity(intent);
-       // Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
     }
     public void like(View view) {
         Toast.makeText(this, "like", Toast.LENGTH_SHORT).show();
@@ -300,8 +300,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     //------------- מעביר לדף פוסט לייטאוט----------
+
     public void new_post_uploade(View view) {
-        Intent intent = new Intent(MainActivity.this,PostActivity.class);
+        Intent intent = new Intent(MainActivity.this , PostActivity.class);
         startActivity(intent);
     }
 }

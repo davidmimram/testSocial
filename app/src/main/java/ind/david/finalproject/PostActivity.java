@@ -194,7 +194,7 @@ public class PostActivity extends AppCompatActivity {
 
 
                             }
-                            else 
+                            else
                             {
 
                                 loadingBar.dismiss();
