@@ -99,21 +99,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currectUser = mAuth.getCurrentUser();
-        if (currectUser == null)
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null)
         {
 
             SendUserToLogInActivity();
         }
         else {
 
-            ChekUserExistence();
+            CheckUserExistence();
         }
 
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // מה קורה אם היוזר לא קיים בדטה בייס מה נעשה
-    private void ChekUserExistence()
+    private void CheckUserExistence()
     {
     final String current_user_id = mAuth.getCurrentUser().getUid();
     UserRef.addValueEventListener(new ValueEventListener() {
