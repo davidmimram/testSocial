@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
     public void center(View view) {
         Intent intent = new Intent(MainActivity.this,PostActivity.class);
         startActivity(intent);
-        Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
     }
     public void like(View view) {
         Toast.makeText(this, "like", Toast.LENGTH_SHORT).show();
