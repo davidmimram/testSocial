@@ -3,6 +3,7 @@ package ind.david.finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -317,14 +318,27 @@ public class MainActivity extends AppCompatActivity {
     public void center(View view) {
 
 
-        Button button = (Button)findViewById(R.id.icon_center);
-        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
-        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
-        myAnim.setInterpolator(interpolator);
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
-        button.startAnimation(myAnim);
+                Button button = (Button)findViewById(R.id.icon_center);
+                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+
+                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+                myAnim.setInterpolator(interpolator);
+
+                button.startAnimation(myAnim);
+                Intent intent =new Intent(MainActivity.this,PostActivity.class);
+                startActivity(intent);
+
+            }
+        },2000);
+
 
 
 
@@ -332,8 +346,6 @@ public class MainActivity extends AppCompatActivity {
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         button.startAnimation(myAnim);*/
 
-        Intent intent = new Intent(MainActivity.this,PostActivity.class);
-        startActivity(intent);
 
 
         /// צריך פה אנדלר כדי לעקב שהאייקון יספיק לעשות את האפקט שלו

@@ -4,25 +4,25 @@
     android:id="@+id/main_app_bar"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginTop="560dp"
+    android:layout_marginTop="520dp"
     android:background="#FDFDFD"
+    android:paddingBottom="0dp"
     android:src="@drawable/bitmap_copy">
 
 
     <Button
-        android:onClick="home"
         android:id="@+id/icon_home"
         android:layout_width="20dp"
         android:layout_height="21dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="29dp"
-        android:scaleType="centerCrop"
         android:background="@drawable/home"
+        android:onClick="home"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/home" />
 
     <Button
-        android:onClick="search"
         android:id="@+id/icon_search"
         android:layout_width="21dp"
         android:layout_height="21dp"
@@ -31,10 +31,10 @@
         android:layout_marginStart="49dp"
         android:layout_toEndOf="@+id/icon_home"
         android:background="@drawable/search"
+        android:onClick="search"
         app:srcCompat="@drawable/search" />
 
     <Button
-        android:onClick="center"
         android:id="@+id/icon_center"
         android:layout_width="21dp"
         android:layout_height="21dp"
@@ -42,10 +42,10 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="176dp"
         android:background="@drawable/retnagle"
+        android:onClick="center"
         app:srcCompat="@drawable/retnagle" />
 
     <Button
-        android:onClick="like"
         android:id="@+id/icon_like"
         android:layout_width="21dp"
         android:layout_height="25dp"
@@ -54,10 +54,10 @@
         android:layout_marginStart="50dp"
         android:layout_toEndOf="@+id/icon_center"
         android:background="@drawable/activity"
+        android:onClick="like"
         app:srcCompat="@drawable/activity" />
 
     <Button
-        android:onClick="profile"
         android:id="@+id/icon_profile"
         android:layout_width="19dp"
         android:layout_height="19dp"
@@ -65,10 +65,10 @@
         android:layout_marginStart="50dp"
         android:layout_toEndOf="@+id/icon_like"
         android:background="@drawable/profile"
+        android:onClick="profile"
         app:srcCompat="@drawable/profile" />
 
     <Button
-        android:onClick="like"
         android:id="@+id/imageView2"
         android:layout_width="6dp"
         android:layout_height="6dp"
@@ -77,6 +77,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/orangeovel"
-        app:srcCompat="@drawable/orangeovel"
-        />
+        android:onClick="like"
+        app:srcCompat="@drawable/orangeovel" />
 </RelativeLayout>
