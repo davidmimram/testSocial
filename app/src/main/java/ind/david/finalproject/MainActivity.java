@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView postList;
     private RelativeLayout bottomtab;
     // new one//
-    private ImageView AddNewPostButton;
+    private Button AddNewPostButton;
     //-----------------------------------
     private FirebaseAuth mAuth;
     private DatabaseReference UserRef,PostRef;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     //    private Toolbar mToolBar;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
 
 
     // מה המצב ??
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
-        AddNewPostButton = (ImageView) findViewById(R.id.new_post_uploade);
+        AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
 
 
         //todo: david changed a few things!
@@ -95,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    // בדיקת כפתורים
+
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // בודק אם היוזר מחובר לפיירבייס או לחשבון - זה יעלהאת העמוד לוגין כראשון כמסך התחברות !!!
@@ -267,38 +277,102 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
-
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-
-
 
 
 
     //~~~~~~Bottom Knobs~~~~~~~~//
 
     public void home(View view) {
-                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
+
+        Button button = (Button)findViewById(R.id.icon_home);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+
+
+//                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
     }
     public void search(View view) {
-        Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+
+
+        Button button = (Button)findViewById(R.id.icon_search);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+//        Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
     }
     public void center(View view) {
+
+
+        Button button = (Button)findViewById(R.id.icon_center);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+
+       /* Button button = (Button)findViewById(R.id.icon_center);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        button.startAnimation(myAnim);*/
+
         Intent intent = new Intent(MainActivity.this,PostActivity.class);
         startActivity(intent);
+
+
+        /// צריך פה אנדלר כדי לעקב שהאייקון יספיק לעשות את האפקט שלו
+
+
 //        Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
     }
     public void like(View view) {
-        Toast.makeText(this, "like", Toast.LENGTH_SHORT).show();
+
+
+        Button button = (Button)findViewById(R.id.icon_like);
+        Button button2 = (Button)findViewById(R.id.imageView2);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+//        Toast.makeText(this, "like", Toast.LENGTH_SHORT).show();
     }
     public void profile(View view) {
-        Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show();
+
+
+        Button button = (Button)findViewById(R.id.icon_profile);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+
+
+//        Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -307,6 +381,19 @@ public class MainActivity extends AppCompatActivity {
     //------------- מעביר לדף פוסט לייטאוט----------
 
     public void new_post_uploade(View view) {
+
+        Button button = (Button)findViewById(R.id.new_post_uploade);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+
+
         Intent intent = new Intent(MainActivity.this , PostActivity.class);
         startActivity(intent);
     }

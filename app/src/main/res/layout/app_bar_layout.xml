@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/bitmap_copy"
         android:layout_centerHorizontal="true"/>
 
-    <ImageView
+    <Button
         android:onClick="new_post_uploade"
         android:id="@+id/new_post_uploade"
         android:layout_width="19dp"
@@ -27,6 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="24dp"
+        android:background="@drawable/add"
         app:srcCompat="@drawable/add" />
 
     <ImageView
