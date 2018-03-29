@@ -3,7 +3,6 @@ package ind.david.finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -320,10 +319,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        Handler handler=new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
 
                 Button button = (Button)findViewById(R.id.icon_center);
                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
@@ -335,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =new Intent(MainActivity.this,PostActivity.class);
                 startActivity(intent);
 
-            }
-        },2000);
+
+//        },2000);
 
 
 

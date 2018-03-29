@@ -80,4 +80,13 @@
         android:background="@drawable/orangeovel"
         android:onClick="like"
         app:srcCompat="@drawable/orangeovel" />
+
+    <ImageView
+        android:id="@+id/lineafrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/line" />
+
 </RelativeLayout>
