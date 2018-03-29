@@ -234,7 +234,7 @@ public class PostActivity extends AppCompatActivity {
              ImageUri = data.getData();
 
             didPickImage = true;
-            Picasso.with(this).load(data.getData()).resize(100, 100).into(SelectPostImage);
+            Picasso.with(this).load(data.getData()).resize(10, 10).into(SelectPostImage);
             //  SelectPostImage.setImageURI(ImageUri);
         }
 
