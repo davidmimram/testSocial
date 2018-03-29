@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,23 +40,22 @@ public class PostActivity extends AppCompatActivity {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //defult
     private Toolbar mUpBar;
-    private  ImageView returnIcon;
+    private ImageView returnIcon;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // new for this screen:
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private ImageButton SelectPostImage;
     private Button UpdatePostButton;
     private EditText postDescripition;
-    private Uri ImageUri;
-    private  String Descripition;
+    //private Uri ImageUri;
+    private String Descripition;
     private StorageReference PostImagesRefernces;
-    private String saveCurrentDate,saveCurrentTime,postRandomName,downloadUrl,current_user_id;
-    private DatabaseReference  UserRef, PostsRef;
+    private String saveCurrentDate, saveCurrentTime, timeOfImage, downloadUrl, current_user_id;
+    private DatabaseReference UserRef, PostsRef;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
-
-
+    Uri ImageUri;
     private static final int Gallery_Pick = 1;
 
 
@@ -98,17 +98,13 @@ public class PostActivity extends AppCompatActivity {
 
     private void ValiDatePostInfo() {
         Descripition = postDescripition.getText().toString();
-        if(ImageUri == null)
-        {
+        if (!didPickImage) {
             Toast.makeText(this, "אנא בחר תמונה", Toast.LENGTH_SHORT).show();
 
-         }
-        else if(TextUtils.isEmpty(Descripition))
-        {
+        } else if (TextUtils.isEmpty(Descripition)) {
             Toast.makeText(this, "הינך חייב למלאות כ10 תווים לפחות", Toast.LENGTH_SHORT).show();
 
-        }
-        else {
+        } else {
             StorinImageToFireBaseStorge();
             //------------------------------------
             // תיבה מה קורה בזמן שנוצר החשבון
@@ -120,49 +116,47 @@ public class PostActivity extends AppCompatActivity {
 
         }
 
-         }
+    }
 
-    private void StorinImageToFireBaseStorge()
-    {
+    private void StorinImageToFireBaseStorge() {
 
         Calendar callforDate = Calendar.getInstance();
-        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyyy");
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MM-yyyy");
         saveCurrentDate = currentdate.format(callforDate.getTime());
 
         //~~~~~~~~~~~~~~~CallFortime~~~~~~~~~~~~~
         Calendar callForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm ");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH-mm");
         saveCurrentTime = currentTime.format(callforDate.getTime());
 
 
-        postRandomName = saveCurrentDate + saveCurrentTime;
+        timeOfImage = saveCurrentDate + saveCurrentTime;
 
 
+        StorageReference filePath = PostImagesRefernces.child("Posts").child("Post_" + timeOfImage + ".jpg");
 
-
-
-        StorageReference filePath = PostImagesRefernces.child("Posts").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
-
-        //TODO:
-        //BitmapFactory.decodeFile(ImageUri.getPath()).compress(Bitmap.CompressFormat.JPEG, 0.4, );
 
         filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
 
                     downloadUrl = task.getResult().getDownloadUrl().toString();
                     Toast.makeText(PostActivity.this, "התמונה עלתה בהצלחה!", Toast.LENGTH_SHORT).show();
 
 
                     SaveingPostInfomationToDataBase();
-                }
-                else {
+                } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(PostActivity.this, "שגיאה בהעלאת התמונה" + message, Toast.LENGTH_SHORT).show();
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                String message = e.getMessage();
+                Toast.makeText(PostActivity.this, "שגיאה בהעלאת התמונה" + message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,48 +165,42 @@ public class PostActivity extends AppCompatActivity {
 
         UserRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists())
-                {
+                if (dataSnapshot.exists()) {
 
                     String userFullName = dataSnapshot.child("full_name").getValue().toString();
                     String profileImage = dataSnapshot.child("profileImage").getValue().toString();
 
                     HashMap postMap = new HashMap();
-                    postMap.put("uid",current_user_id);
-                    postMap.put("date",saveCurrentDate);
-                    postMap.put("time",saveCurrentTime);
-                    postMap.put("description",Descripition);
-                    postMap.put("postimage",downloadUrl);
-                    postMap.put("profileImage",profileImage);
-                    postMap.put("full_name",userFullName);
-                    PostsRef.child(current_user_id + postRandomName).updateChildren(postMap).addOnCompleteListener
+                    postMap.put("uid", current_user_id);
+                    postMap.put("date", saveCurrentDate);
+                    postMap.put("time", saveCurrentTime);
+                    postMap.put("description", Descripition);
+                    postMap.put("postimage", downloadUrl);
+                    postMap.put("profileImage", profileImage);
+                    postMap.put("full_name", userFullName);
+                    PostsRef.child(current_user_id + timeOfImage).updateChildren(postMap).addOnCompleteListener
                             (new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if(task.isSuccessful())
-                            {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()) {
 
 
-                                Intent intent = new Intent(PostActivity.this,MainActivity.class);
-                                startActivity(intent);
+                                        Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                                        startActivity(intent);
 
-                                loadingBar.dismiss();
-                                Toast.makeText(PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();
+                                        Toast.makeText(PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show();
 
 
-                            }
-                            else
-                            {
+                                    } else {
 
-                                loadingBar.dismiss();
-                                Toast.makeText(PostActivity.this, "שגיאה בזמן עדכון הפוסט", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
+                                        loadingBar.dismiss();
+                                        Toast.makeText(PostActivity.this, "שגיאה בזמן עדכון הפוסט", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
 
                 }
@@ -235,33 +223,33 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    boolean didPickImage = false;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Gallery_Pick && resultCode==RESULT_OK && data !=null)
-        {
+        if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null) {
 
-            ImageUri = data.getData();
+             ImageUri = data.getData();
 
-            Picasso.with(this).load(ImageUri).into(SelectPostImage);
-          //  SelectPostImage.setImageURI(ImageUri);
+            didPickImage = true;
+            Picasso.with(this).load(data.getData()).resize(100, 100).into(SelectPostImage);
+            //  SelectPostImage.setImageURI(ImageUri);
         }
 
     }
 
-    public void SendToMainActivity(View view)
-    {
-        Intent intent = new Intent(PostActivity.this,MainActivity.class);
+    public void SendToMainActivity(View view) {
+        Intent intent = new Intent(PostActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
 
     }
 
 
-    private void SendUserToActivity()
-    {
-        Intent setupIntent = new Intent(PostActivity.this,SetupActivity.class);
+    private void SendUserToActivity() {
+        Intent setupIntent = new Intent(PostActivity.this, SetupActivity.class);
         setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(setupIntent);
         finish();
