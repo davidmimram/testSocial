@@ -27,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MainActivity extends AppCompatActivity {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,14 +164,14 @@ public class MainActivity extends AppCompatActivity {
             firebaseRecycleAdepter =
                     new FirebaseRecyclerAdapter<Post, PostViewHolder>(
                             Post.class,
-                            R.layout.all_the_post_layout,
+                            R.layout.posttry,
                             PostViewHolder.class,
                             PostRef) {
                         @Override
                         protected void populateViewHolder(PostViewHolder viewHolder, Post model, int position) {
                             viewHolder.setFullname(model.getFullname());
-                            viewHolder.setTime(model.getTime());
-                            viewHolder.setDate(model.getDate());
+                           /* viewHolder.setTime(model.getTime());
+                            viewHolder.setDate(model.getDate());*/
                             viewHolder.setDescription(model.getDescription());
                             viewHolder.setProfileImage(getApplicationContext(), model.getProfileImage());
                             viewHolder.setPostimage(getApplicationContext(), model.getPostimage());
@@ -204,19 +202,19 @@ public class MainActivity extends AppCompatActivity {
         public void setFullname(String fullname)
         {
 
-            TextView username = (TextView) mView.findViewById(R.id.post_user_name);
+            TextView username = (TextView) mView.findViewById(R.id.mainUserText);
             username.setText(fullname);
         }
 
         public void setProfileImage(Context ctx ,String profileImage)
         {
 
-            CircleImageView imageView = (CircleImageView) mView.findViewById(R.id.post_profile_image);
+            ImageView imageView =  mView.findViewById(R.id.mainUserImage);
             Picasso.with(ctx).load(profileImage).into(imageView);
 
         }
 
-        public void setTime(String time)
+/*        public void setTime(String time)
         {
 
             TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
@@ -229,17 +227,17 @@ public class MainActivity extends AppCompatActivity {
             TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
             PostDate.setText("   " +date);
 
-        }
+        }*/
         public void setDescription(String description)
         {
-            TextView Postdescription = (TextView) mView.findViewById(R.id.post_descripition);
+            TextView Postdescription = (TextView) mView.findViewById(R.id.mainCommentText);
             Postdescription.setText(description);
 
         }
 
         public void setPostimage(Context ctx, String postimages)
         {
-            ImageView Postimage = (ImageView) mView.findViewById(R.id.post_image);
+            ImageView Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
             Picasso.with(ctx).load(postimages).into(Postimage);
 
 
