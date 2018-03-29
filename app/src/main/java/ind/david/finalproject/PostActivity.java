@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -142,6 +143,8 @@ public class PostActivity extends AppCompatActivity {
 
         StorageReference filePath = PostImagesRefernces.child("Posts").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
 
+        //TODO:
+        //BitmapFactory.decodeFile(ImageUri.getPath()).compress(Bitmap.CompressFormat.JPEG, 0.4, );
 
         filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -240,7 +243,9 @@ public class PostActivity extends AppCompatActivity {
         {
 
             ImageUri = data.getData();
-            SelectPostImage.setImageURI(ImageUri);
+
+            Picasso.with(this).load(ImageUri).into(SelectPostImage);
+          //  SelectPostImage.setImageURI(ImageUri);
         }
 
     }
