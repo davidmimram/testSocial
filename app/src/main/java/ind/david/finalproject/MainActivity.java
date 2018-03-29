@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button AddNewPostButton;
     //-----------------------------------
     private FirebaseAuth mAuth;
-    private DatabaseReference UserRef,PostRef;
+    private DatabaseReference UserRef,PostRef,UserUpProfile;
     private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter;
 
     //    private Toolbar mToolBar;
@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView imageView =  mView.findViewById(R.id.mainUserImage);
             Picasso.with(ctx).load(profileImage).into(imageView);
+
 
         }
 

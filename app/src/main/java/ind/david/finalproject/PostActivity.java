@@ -136,6 +136,7 @@ public class PostActivity extends AppCompatActivity {
         StorageReference filePath = PostImagesRefernces.child("Posts").child("Post_" + timeOfImage + ".jpg");
 
 
+
         filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -143,6 +144,7 @@ public class PostActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     downloadUrl = task.getResult().getDownloadUrl().toString();
+
                     Toast.makeText(PostActivity.this, "התמונה עלתה בהצלחה!", Toast.LENGTH_SHORT).show();
 
 
@@ -158,6 +160,10 @@ public class PostActivity extends AppCompatActivity {
                 String message = e.getMessage();
                 Toast.makeText(PostActivity.this, "שגיאה בהעלאת התמונה" + message, Toast.LENGTH_SHORT).show();
             }
+
+
+
+
         });
     }
 
@@ -234,7 +240,7 @@ public class PostActivity extends AppCompatActivity {
              ImageUri = data.getData();
 
             didPickImage = true;
-            Picasso.with(this).load(data.getData()).resize(10, 10).into(SelectPostImage);
+            Picasso.with(this).load(data.getData()).resize(300, 300).into(SelectPostImage);
             //  SelectPostImage.setImageURI(ImageUri);
         }
 

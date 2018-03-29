@@ -22,26 +22,27 @@
 
     <ImageView
         android:id="@+id/mainPostImage"
-        android:layout_width="wrap_content"
-        android:layout_height="330dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="327dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintBottom_toTopOf="@+id/mainFrame"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.054"
         app:srcCompat="@drawable/photomain" />
 
-     <de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/mainUserImage"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/mainUserImage"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-         />
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -62,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hanni_Mimram"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <android.support.constraint.Guideline
@@ -79,7 +80,8 @@
         android:text="Tel Aviv IL"
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline3" />
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toBottomOf="@+id/mainUserText" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -328,6 +330,27 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline18" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="351dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="350dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.19010417" />
 
 
 </android.support.constraint.ConstraintLayout>
