@@ -67,11 +67,6 @@ public class SetupActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
-
-
-
         //--------------------------------------
 
         SaveinformationBotton.setOnClickListener(new View.OnClickListener() {

@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout bottomtab;
     // new one//
     private Button AddNewPostButton;
+    //-----------------------------------
+    //circle userprofile:
+    String currentUserID;
+    private CircleImageView upProfileImage;
+
     //-----------------------------------
     private FirebaseAuth mAuth;
     private DatabaseReference UserRef,PostRef,UserUpProfile;
@@ -48,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // מה המצב ??
-    // מה נשמע ??
-    //  מה קורה ??
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +63,39 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
+        upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
+
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
+
+        UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+
+                    String image = dataSnapshot.child("profileImage").getValue().toString();
+                    Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile_ovel_two).into(upProfileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 
         //todo: david changed a few things!
