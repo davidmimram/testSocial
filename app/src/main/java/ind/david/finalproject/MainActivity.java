@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-        currentUserID = mAuth.getCurrentUser().getUid();
+        try {
+            currentUserID = mAuth.getCurrentUser().getUid();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
@@ -75,23 +79,31 @@ public class MainActivity extends AppCompatActivity {
 
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
 
-        UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
+        try {
+            UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
                 {
+                    if (dataSnapshot.exists())
+                    {
 
-                    String image = dataSnapshot.child("profileImage").getValue().toString();
-                    Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile_ovel_two).into(upProfileImage);
+                        try {
+                            String image = dataSnapshot.child("profileImage").getValue().toString();
+                            Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile_ovel_two).into(upProfileImage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~~~~~~~~~~~~~~~
 

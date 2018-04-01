@@ -61,7 +61,9 @@ public class SetupActivity extends AppCompatActivity {
         profileImage = (CircleImageView) findViewById(R.id.setup_profile_Image);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         mAuth = FirebaseAuth.getInstance();
+/*
         currentUserID = mAuth.getCurrentUser().getUid();
+*/
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
         loadingBar = new ProgressDialog(this);
