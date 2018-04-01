@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        currentUserID = mAuth.getCurrentUser().getUid();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
