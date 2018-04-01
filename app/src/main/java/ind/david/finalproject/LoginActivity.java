@@ -7,9 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private EditText etEmail;
     private EditText etPassword;
-    private Button LoginButton;
+    private ImageView LoginButton;
 
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 1;
@@ -36,12 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_page);
 
-        TextView needNewAccoutLink = (TextView) findViewById(R.id.register_account_link);
+        ImageView needNewAccoutLink = (ImageView) findViewById(R.id.register_account_link);
         etEmail=(EditText)findViewById(R.id.login_email);
         etPassword=(EditText)findViewById(R.id.login_password);
-        LoginButton = (Button)findViewById(R.id.login_button);
+        LoginButton = (ImageView)findViewById(R.id.login_button);
         mAuth=FirebaseAuth.getInstance();
         loadingBar=new ProgressDialog(this);
 
@@ -111,6 +112,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void SendUserToMainActivity() {
+
+
+        ImageView button = (ImageView) findViewById(R.id.login_button);
+
+        final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.bounce);
+
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+
+        button.startAnimation(myAnim);
+
+
+
         Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
