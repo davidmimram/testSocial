@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,18 +20,18 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText userEmail,userPassword,userConfirmPassword;
-    private Button btnCreate;
+    private ImageView btnCreate;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.register_page);
         userEmail=(EditText)findViewById(R.id.register_email);
         userPassword=(EditText)findViewById(R.id.register_password);
         userConfirmPassword=(EditText)findViewById(R.id.register_password_confiromd);
-        btnCreate=(Button)findViewById(R.id.register_create_account);
+        btnCreate=(ImageView)findViewById(R.id.register_create_account);
         loadingBar=new ProgressDialog(this);
         mAuth=FirebaseAuth.getInstance();
 
@@ -90,7 +90,8 @@ public class RegisterActivity extends AppCompatActivity {
         loadingBar.show();
         loadingBar.setCanceledOnTouchOutside(true);
 
-        {mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        {
+            mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -108,6 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
         }
     }
+
+
+
 
     private void SendUserToSetupActivity() {
         Intent setupIntent=new Intent(RegisterActivity.this,LoginActivity.class);

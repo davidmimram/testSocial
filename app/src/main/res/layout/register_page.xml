@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/registerbackground" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="121dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
+        app:layout_constraintEnd_toStartOf="@+id/guideline25"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/guideline24"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        app:srcCompat="@drawable/logologinpage" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.23809524" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15873016" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.34375" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6588542" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6684303" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.61728394" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7266314" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7760141" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8747795" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toStartOf="@+id/guideline36"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline35"
+        app:layout_constraintTop_toTopOf="@+id/guideline29"
+        app:layout_constraintVertical_bias="0.195"
+        app:srcCompat="@drawable/registerbox" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.041666668" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9557292" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="148dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline36"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline30"
+        app:srcCompat="@drawable/passwordbox" />
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="148dp"
+        android:layout_height="84dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline34"
+        app:layout_constraintStart_toStartOf="@+id/guideline35"
+        app:layout_constraintTop_toTopOf="@+id/guideline30"
+        app:srcCompat="@drawable/passwordbox" />
+
+    <ImageView
+        android:id="@+id/register_create_account"
+        android:layout_width="347dp"
+        android:layout_height="110dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline33"
+        app:layout_constraintVertical_bias="0.333"
+        app:srcCompat="@drawable/registerbtn" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="13dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline37"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
+        app:srcCompat="@drawable/mail" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8229167" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline37"
+        app:layout_constraintTop_toTopOf="@+id/guideline41"
+        app:srcCompat="@drawable/key" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toStartOf="@+id/guideline39"
+        app:layout_constraintStart_toStartOf="@+id/guideline38"
+        app:layout_constraintTop_toTopOf="@+id/guideline41"
+        app:srcCompat="@drawable/key" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.34375" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.390625" />
+
+    <EditText
+        android:id="@+id/register_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="אימייל"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guideline37"
+        app:layout_constraintStart_toStartOf="@+id/guideline40"
+        app:layout_constraintTop_toTopOf="@+id/guideline28" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.119791664" />
+
+    <EditText
+        android:id="@+id/register_password_confiromd"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="אשר סיסמא"
+        android:inputType="textPassword"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintStart_toStartOf="@+id/guideline40"
+        app:layout_constraintTop_toTopOf="@+id/guideline41" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7918871" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8271605" />
+
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="סיסמא"
+        android:inputType="textPassword"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toStartOf="@+id/imageView15"
+        app:layout_constraintStart_toStartOf="@+id/guideline43"
+        app:layout_constraintTop_toTopOf="@+id/guideline41" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6145833" />
+
+
+</android.support.constraint.ConstraintLayout>

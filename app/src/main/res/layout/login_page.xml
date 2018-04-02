@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/backgroundloginpage" />
+        app:srcCompat="@drawable/fedorathree" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -55,14 +55,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline29"
         app:srcCompat="@drawable/box" />
 
-    <ImageView
+    <Button
         android:id="@+id/login_button"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_width="161dp"
+        android:layout_height="73dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/loginbtn"
+        android:onClick="playeffect"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline34"
@@ -108,37 +111,37 @@
 
     <EditText
         android:id="@+id/login_email"
-        android:layout_width="215dp"
-        android:layout_height="wrap_content"
+        android:layout_width="307dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:background="@null"
         android:ems="10"
         android:hint="אימייל"
-        android:background="@null"
         android:inputType="textEmailAddress"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
-        />
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
     <EditText
         android:id="@+id/login_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="306dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:background="@null"
         android:ems="10"
         android:hint="סיסמא"
         android:inputType="textPassword"
-        android:background="@null"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/guideline33"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline22"

@@ -7,8 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private EditText etEmail;
     private EditText etPassword;
-    private ImageView LoginButton;
+    private Button LoginButton;
 
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 1;
@@ -42,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         ImageView needNewAccoutLink = (ImageView) findViewById(R.id.register_account_link);
         etEmail=(EditText)findViewById(R.id.login_email);
         etPassword=(EditText)findViewById(R.id.login_password);
-        LoginButton = (ImageView)findViewById(R.id.login_button);
+        LoginButton = (Button)findViewById(R.id.login_button);
         mAuth=FirebaseAuth.getInstance();
         loadingBar=new ProgressDialog(this);
 
@@ -114,7 +113,31 @@ public class LoginActivity extends AppCompatActivity {
     private void SendUserToMainActivity() {
 
 
-        ImageView button = (ImageView) findViewById(R.id.login_button);
+
+
+        Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+
+
+    }
+
+    private void SendUserToRegisterActivity() {
+        try {
+            Intent RegisterIntent= new Intent (LoginActivity.this,RegisterActivity.class);
+            startActivity(RegisterIntent);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+/*
+    public void playeffect(View view) {
+        Button button = (Button)findViewById(R.id.login_button);
+
 
         final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.bounce);
 
@@ -125,19 +148,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
-    }
 
-    private void SendUserToRegisterActivity() {
-        Intent RegisterIntent= new Intent (LoginActivity.this,RegisterActivity.class);
-        startActivity(RegisterIntent);
-        finish();
-
-
-    }
+    }*/
 }
 
 

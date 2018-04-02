@@ -61,13 +61,16 @@ public class SetupActivity extends AppCompatActivity {
         profileImage = (CircleImageView) findViewById(R.id.setup_profile_Image);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         mAuth = FirebaseAuth.getInstance();
-/*
         currentUserID = mAuth.getCurrentUser().getUid();
-*/
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
         loadingBar = new ProgressDialog(this);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
 
         //--------------------------------------
 
@@ -85,10 +88,10 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-            Intent galleryIntent = new Intent();
-            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-            galleryIntent.setType("image/*");
-            startActivityForResult(galleryIntent, Gallery_Pick);
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, Gallery_Pick);
             }
         });
 
@@ -171,7 +174,7 @@ public class SetupActivity extends AppCompatActivity {
                                                 loadingBar.dismiss();
 
                                             }
-                                            else 
+                                            else
                                             {
                                                 String message = task.getException().getMessage();
                                                 Toast.makeText(SetupActivity.this, "התמונה אינה נשמרה במערכת!" + message, Toast.LENGTH_SHORT).show();
@@ -186,11 +189,11 @@ public class SetupActivity extends AppCompatActivity {
                 });
 
             }
-            else 
-                {
-                    Toast.makeText(this, "בעיית העלאה - נסה שנית.", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-                
+            else
+            {
+                Toast.makeText(this, "בעיית העלאה - נסה שנית.", Toast.LENGTH_SHORT).show();
+                loadingBar.dismiss();
+
             }
         }
     }
@@ -233,7 +236,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("full_name",fullname);
             userMap.put("country",country);
             // כאן נוכל לקחת עוד מידע מהשתמש כמו למשל ביוגרפיה או כל דבר אחר
-             userMap.put("status","this is post msg");
+            userMap.put("status","this is post msg");
             userMap.put("gender","none");
             userMap.put("bod","none");
             userMap.put("relationshipstatus","none");
@@ -247,11 +250,11 @@ public class SetupActivity extends AppCompatActivity {
                         loadingBar.dismiss();
                     }
                     else
-                        {
-                            String message = task.getException().getMessage();
-                            Toast.makeText(SetupActivity.this,"בעיה ביצירת החשבון" + message,Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-                        }
+                    {
+                        String message = task.getException().getMessage();
+                        Toast.makeText(SetupActivity.this,"בעיה ביצירת החשבון" + message,Toast.LENGTH_SHORT).show();
+                        loadingBar.dismiss();
+                    }
                 }
             });
 
