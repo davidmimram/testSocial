@@ -45,15 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
     //-----------------------------------
     private FirebaseAuth mAuth;
-    private DatabaseReference UserRef,PostRef,UserUpProfile;
+    private DatabaseReference UserRef, PostRef, UserUpProfile;
     private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter;
 
     //    private Toolbar mToolBar;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
 
 
     @Override
@@ -76,16 +72,13 @@ public class MainActivity extends AppCompatActivity {
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
 
 
-
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
 
         try {
             UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    if (dataSnapshot.exists())
-                    {
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
 
                         try {
                             String image = dataSnapshot.child("profileImage").getValue().toString();
@@ -106,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 
         //todo: david changed a few things!
@@ -145,57 +136,56 @@ public class MainActivity extends AppCompatActivity {
     // בדיקת כפתורים
 
 
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // בודק אם היוזר מחובר לפיירבייס או לחשבון - זה יעלהאת העמוד לוגין כראשון כמסך התחברות !!!
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null)
-        {
+        if (currentUser == null) {
 
             SendUserToLogInActivity();
-        }
-        else {
+        } else {
 
             CheckUserExistence();
         }
 
     }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // מה קורה אם היוזר לא קיים בדטה בייס מה נעשה
-    private void CheckUserExistence()
-    {
-    final String current_user_id = mAuth.getCurrentUser().getUid();
-    UserRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            if (!dataSnapshot.hasChild(current_user_id))  {
-                SendUserToActivity();
+    private void CheckUserExistence() {
+        final String current_user_id = mAuth.getCurrentUser().getUid();
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild(current_user_id)) {
+                    SendUserToActivity();
 
-                //--------firday----///
-                AddNewPostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SendUserToPostActivity();
-                    }
-                });
+                    //--------firday----///
+                    AddNewPostButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SendUserToPostActivity();
+                        }
+                    });
 
-            } else {
-                DisplayallUserPost();
+                } else {
+                    DisplayallUserPost();
+                }
+
             }
 
-        }
+            //--------firday----///
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        //--------firday----///
-        @Override
-        public void onCancelled(DatabaseError databaseError)
-        {
-
-        }
-    });
+            }
+        });
     }
+
+
+
 
 
 
@@ -205,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             firebaseRecycleAdepter =
                     new FirebaseRecyclerAdapter<Post, PostViewHolder>(
                             Post.class,
-                            R.layout.posttry,
+                            R.layout.posttrytwo,
                             PostViewHolder.class,
                             PostRef) {
                         @Override
@@ -221,17 +211,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     };
             postList.setAdapter(firebaseRecycleAdepter);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
 
-
-
-    public static class PostViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
@@ -240,45 +227,42 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
         }
-        public void setFullname(String fullname)
-        {
+
+        public void setFullname(String fullname) {
 
             TextView username = (TextView) mView.findViewById(R.id.mainUserText);
             username.setText(fullname);
         }
 
-        public void setProfileImage(Context ctx ,String profileImage)
-        {
+        public void setProfileImage(Context ctx, String profileImage) {
 
-            ImageView imageView =  mView.findViewById(R.id.mainUserImage);
+            ImageView imageView = mView.findViewById(R.id.mainUserImage);
             Picasso.with(ctx).load(profileImage).into(imageView);
 
 
         }
 
-/*        public void setTime(String time)
-        {
+        /*        public void setTime(String time)
+                {
 
-            TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
-            PostTime.setText("   " + time);
+                    TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
+                    PostTime.setText("   " + time);
 
-        }
+                }
 
-        public void setDate(String date)
-        {
-            TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
-            PostDate.setText("   " +date);
+                public void setDate(String date)
+                {
+                    TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
+                    PostDate.setText("   " +date);
 
-        }*/
-        public void setDescription(String description)
-        {
+                }*/
+        public void setDescription(String description) {
             TextView Postdescription = (TextView) mView.findViewById(R.id.mainCommentText);
             Postdescription.setText(description);
 
         }
 
-        public void setPostimage(Context ctx, String postimages)
-        {
+        public void setPostimage(Context ctx, String postimages) {
             ImageView Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
             Picasso.with(ctx).load(postimages).into(Postimage);
 
@@ -290,15 +274,14 @@ public class MainActivity extends AppCompatActivity {
 
     //--------firday----///
     private void SendUserToPostActivity() {
-        Intent addNewPostIntent = new Intent(MainActivity.this,PostActivity.class);
+        Intent addNewPostIntent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(addNewPostIntent);
     }
     //--------firday----///
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private void SendUserToActivity()
-    {
-        Intent setupIntent = new Intent(MainActivity.this,SetupActivity.class);
+    private void SendUserToActivity() {
+        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
         setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(setupIntent);
         finish();
@@ -312,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void SendUserToLogInActivity() {
-        Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginIntent);
         finish();
@@ -321,12 +304,11 @@ public class MainActivity extends AppCompatActivity {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-
     //~~~~~~Bottom Knobs~~~~~~~~//
 
     public void home(View view) {
 
-        Button button = (Button)findViewById(R.id.icon_home);
+        Button button = (Button) findViewById(R.id.icon_home);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -336,14 +318,13 @@ public class MainActivity extends AppCompatActivity {
         button.startAnimation(myAnim);
 
 
-
-
 //                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
     }
+
     public void search(View view) {
 
 
-        Button button = (Button)findViewById(R.id.icon_search);
+        Button button = (Button) findViewById(R.id.icon_search);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -355,9 +336,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
     }
+
     public void center(View view) {
-
-
 
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -366,15 +346,15 @@ public class MainActivity extends AppCompatActivity {
 //            @Override
 //            public void run() {
 
-                Button button = (Button)findViewById(R.id.icon_center);
-                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+        Button button = (Button) findViewById(R.id.icon_center);
+        final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
 
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
-                myAnim.setInterpolator(interpolator);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
 
-                button.startAnimation(myAnim);
-                Intent intent =new Intent(MainActivity.this,PostActivity.class);
-                startActivity(intent);
+        button.startAnimation(myAnim);
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
 
 
 //        },2000);
@@ -387,17 +367,17 @@ public class MainActivity extends AppCompatActivity {
         button.startAnimation(myAnim);*/
 
 
-
         /// צריך פה אנדלר כדי לעקב שהאייקון יספיק לעשות את האפקט שלו
 
 
 //        Toast.makeText(this, "center", Toast.LENGTH_SHORT).show();
     }
+
     public void like(View view) {
 
 
-        Button button = (Button)findViewById(R.id.icon_like);
-        Button button2 = (Button)findViewById(R.id.imageView2);
+        Button button = (Button) findViewById(R.id.icon_like);
+        Button button2 = (Button) findViewById(R.id.imageView2);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -409,10 +389,11 @@ public class MainActivity extends AppCompatActivity {
 
 //        Toast.makeText(this, "like", Toast.LENGTH_SHORT).show();
     }
+
     public void profile(View view) {
 
 
-        Button button = (Button)findViewById(R.id.icon_profile);
+        Button button = (Button) findViewById(R.id.icon_profile);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -420,21 +401,17 @@ public class MainActivity extends AppCompatActivity {
         myAnim.setInterpolator(interpolator);
 
         button.startAnimation(myAnim);
-
-
 
 
 //        Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show();
     }
 
 
-
-
     //------------- מעביר לדף פוסט לייטאוט----------
 
     public void new_post_uploade(View view) {
 
-        Button button = (Button)findViewById(R.id.new_post_uploade);
+        Button button = (Button) findViewById(R.id.new_post_uploade);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -444,77 +421,23 @@ public class MainActivity extends AppCompatActivity {
         button.startAnimation(myAnim);
 
 
-
-
-        Intent intent = new Intent(MainActivity.this , PostActivity.class);
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(intent);
     }
+
+
+
+/*    Animator spruceAnimator = new Spruce
+            .SpruceBuilder(postList)
+            .sortWith(new DefaultSort(*//*interObjectDelay=*//*50L))
+            .animateWith(new Animator[]{DefaultAnimations.shrinkAnimator(postList, *//*duration=*//*800)})
+            .start();*/
+
 }
 
-///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 
 
 
 
 
-
-
-////Shutdown Codes:
-//______________________
-
-        //~~~ Header~~~~//
-//     /*navigationView = (NavigationView) findViewById(R.id.navigation_view);*/
-
-        /*// האדר שלנ של התפריט שלנוו*/
-/*        View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
-
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                userMenuSelector(item);
-                return false;
-            }
-        });
-
-    }*/
-
- /*   private void userMenuSelector(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.nav_profile:
-                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
-                break;
-
-
-
-        case R.id.nav_home:
-        Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-        break;
-
-        case R.id.nav_find_friends:
-                Toast.makeText(this, "Find Friends", Toast.LENGTH_SHORT).show();
-                break;
-
-        case R.id.nav_friends:
-                Toast.makeText(this, "Friends", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_message:
-                Toast.makeText(this, "Messages", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_Logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-                break;
-
-
-        }
-    }*/
