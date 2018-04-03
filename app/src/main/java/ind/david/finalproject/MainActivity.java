@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference UserRef, PostRef, UserUpProfile;
     private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecycleAdepter;
 
-    //    private Toolbar mToolBar;
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //------new 3.4.2018------//
+    private DatabaseReference mDatabaseLike;
+    private boolean mProcessClickLike = false;
+    //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
 
 
     @Override
@@ -61,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
+        //------new 3.4.2018------//
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+        mDatabaseLike.keepSynced(true);
+        //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
         try {
             currentUserID = mAuth.getCurrentUser().getUid();
         } catch (Exception e) {
@@ -199,7 +210,13 @@ public class MainActivity extends AppCompatActivity {
                             PostViewHolder.class,
                             PostRef) {
                         @Override
-                        protected void populateViewHolder(PostViewHolder viewHolder, Post model, int position) {
+                        protected void populateViewHolder(final PostViewHolder viewHolder, Post model, int position) {
+
+                            //------new 3.4.2018------//
+                            final String post_key = getRef(position).getKey ();
+
+                            //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
                             viewHolder.setFullname(model.getFullname());
                            /* viewHolder.setTime(model.getTime());
                             viewHolder.setDate(model.getDate());*/
@@ -208,12 +225,70 @@ public class MainActivity extends AppCompatActivity {
                             viewHolder.setPostimage(getApplicationContext(), model.getPostimage());
 
 
+                            //------new 3.4.2018------//
+                            viewHolder.setmLikeBtn (post_key);
+
+                            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            viewHolder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v){
+
+                                    mProcessClickLike = true;
+
+                                    mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        if (mProcessClickLike) {
+
+                                            if (dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())) {
+
+                                                mDatabaseLike.child (post_key).child (mAuth.getCurrentUser ().getUid ()).removeValue ();
+                                                mProcessClickLike = false;
+
+
+                                            } else {
+                                                mDatabaseLike.child (post_key).child (mAuth.getCurrentUser ().getUid ()).setValue ("RandomValue");
+                                                mProcessClickLike = false;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+
+                                }
+                            });
+
+
+                            //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
                         }
+
+
+
                     };
+
+
+
+
             postList.setAdapter(firebaseRecycleAdepter);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -222,17 +297,66 @@ public class MainActivity extends AppCompatActivity {
 
         View mView;
 
+        //------new 3.4.2018------//
+
+        ImageView mLikeBtn;
+        DatabaseReference mDatabaseLike;
+        FirebaseAuth mAuth;
+
+        //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
         public PostViewHolder(View itemView) {
 
             super(itemView);
             mView = itemView;
+
+            //------new 3.4.2018------//
+            mLikeBtn = (ImageView) mView.findViewById(R.id.likeIcon);
+            mDatabaseLike = FirebaseDatabase.getInstance ().getReference ().child ("Likes");
+            mAuth = FirebaseAuth.getInstance ();
+
+            mDatabaseLike.keepSynced (true);
         }
+        public void setmLikeBtn(final String post_key){
+
+
+
+
+        mDatabaseLike.addValueEventListener (new ValueEventListener () {
+            @Override
+            public void onDataChange (DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())){
+
+                    // כאן הקוד של האנימציה
+                    mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
+
+
+                } else {
+                    mLikeBtn.setImageResource (R.drawable.btn_like_suggestiongrey);
+
+                }
+            }
+
+            @Override
+            public void onCancelled (DatabaseError databaseError) {
+
+            }
+        });
+
+
+        }
+        //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
 
         public void setFullname(String fullname) {
 
             TextView username = (TextView) mView.findViewById(R.id.mainUserText);
             username.setText(fullname);
         }
+
 
         public void setProfileImage(Context ctx, String profileImage) {
 

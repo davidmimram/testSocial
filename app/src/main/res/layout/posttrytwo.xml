@@ -217,7 +217,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.528"
-        app:srcCompat="@drawable/btn_like_suggestion" />
+        app:srcCompat="@drawable/btn_like_suggestiongrey" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline11"
