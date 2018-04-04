@@ -30,6 +30,21 @@
         android:background="@drawable/add"
         app:srcCompat="@drawable/add" />
 
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/mapping"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="17dp"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="#B1B1B1"
+        app:lottie_fileName="mappoint.json"
+        app:lottie_loop="true"/>
+
 <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/asProfile"
         android:layout_width="27dp"
@@ -40,6 +55,34 @@
         android:layout_marginEnd="21dp"
         android:layout_marginStart="30dp"
         app:srcCompat="@drawable/profile_ovel_two" />
+
+
+    <ImageView
+        android:id="@+id/lineafrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/line" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="70dp"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="#FF8F8F"
+        app:lottie_fileName="notification.json"
+        app:lottie_loop="true"/>
+
+
+
+
 
 
 </RelativeLayout>

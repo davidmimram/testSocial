@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
     //------new 3.4.2018------//
     private DatabaseReference mDatabaseLike;
     private boolean mProcessClickLike = false;
+
+    //-------comments-------//
+
+
+
     //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
@@ -66,9 +70,16 @@ public class MainActivity extends AppCompatActivity {
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
+
+
         //------new 3.4.2018------//
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLike.keepSynced(true);
+
+
+        //--------comments---------//
+
+
         //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
@@ -200,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     private void DisplayallUserPost() {
 
         try {
@@ -232,7 +245,9 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
 
+/*
                                     Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
+*/
                                 }
                             });
 
@@ -329,12 +344,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if(dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())){
 
-                    // כאן הקוד של האנימציה
+
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
+                    // כאן הקוד של האנימציה
+
+
 
 
                 } else {
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestiongrey);
+
 
                 }
             }

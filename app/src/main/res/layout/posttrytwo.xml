@@ -78,6 +78,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
         android:text="Tel Aviv IL"
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -217,6 +218,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.528"
+        android:background="@drawable/btn_like_suggestiongrey"
         app:srcCompat="@drawable/btn_like_suggestiongrey" />
 
     <android.support.constraint.Guideline
@@ -253,7 +255,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.528"
-        app:srcCompat="@drawable/comment" />
+        app:srcCompat="@drawable/commentthree" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline13"
@@ -294,7 +296,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.528"
-        app:srcCompat="@drawable/buy" />
+        app:srcCompat="@drawable/buytwo" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline15"
@@ -400,6 +402,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="99dp" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="7dp"
+        android:layout_height="9dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline18"
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/mapi" />
 
 
 </android.support.constraint.ConstraintLayout>
