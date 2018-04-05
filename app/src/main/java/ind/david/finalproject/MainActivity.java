@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -149,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
         getSupportActionBar().setTitle("Home")*/
         ;
+
+
 
 
 
@@ -308,6 +311,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -409,9 +416,16 @@ public class MainActivity extends AppCompatActivity {
             ImageView Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
             Picasso.with(ctx).load(postimages).into(Postimage);
 
+            // זום אין לתמונת פוסט
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
 
-//            Postimage.getLayoutParams().height = 321; // OR
-//            Postimage.getLayoutParams().width = 361;
+
+            //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
+
+
+         /*   Postimage.getLayoutParams().height = 321; // OR
+            Postimage.getLayoutParams().width = 361;*/
         }
     }
 
@@ -505,6 +519,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
        /* Button button = (Button)findViewById(R.id.icon_center);
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         button.startAnimation(myAnim);*/
@@ -567,6 +582,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(intent);
     }
+
+
 
 
 

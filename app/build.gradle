@@ -42,7 +42,7 @@ dependencies {
     compile 'me.majiajie:pager-bottom-tab-strip:2.2.5'
     compile 'com.willowtreeapps.spruce:spruce-android:1.0.1'
     compile 'com.airbnb.android:lottie:2.0.0'
-
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
 
 
 
