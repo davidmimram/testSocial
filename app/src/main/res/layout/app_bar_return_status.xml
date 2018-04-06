@@ -9,6 +9,16 @@
 
     >
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/asProfile2"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="50dp"
+        app:srcCompat="@drawable/hanni" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -17,6 +27,9 @@
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/bitmap_copy"
         android:layout_centerHorizontal="true"/>
+
+
+
 
     <ImageView
         android:id="@+id/back"
@@ -27,6 +40,7 @@
         android:layout_marginStart="20dp"
         android:onClick="returnfromprofile"
         app:srcCompat="@drawable/left" />
+
 
 
 </RelativeLayout>

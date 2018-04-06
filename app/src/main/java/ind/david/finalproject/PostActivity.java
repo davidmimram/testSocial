@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class PostActivity extends AppCompatActivity {
@@ -55,6 +56,10 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
+
+    String currentUserID;
+    private CircleImageView upProfileImage;
+
     Uri ImageUri;
     private static final int Gallery_Pick = 1;
 
@@ -62,13 +67,23 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_uploade_post);
+        setContentView(R.layout.activity_uploade_posttwo);
 
         returnIcon = (ImageView) findViewById(R.id.back);
         SelectPostImage = (ImageButton) findViewById(R.id.selectPostImage);
         UpdatePostButton = (Button) findViewById(R.id.postButton);
         postDescripition = (EditText) findViewById(R.id.PostText);
 
+    ///----------///
+        try {
+            currentUserID = mAuth.getCurrentUser().getUid();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        upProfileImage = (CircleImageView) findViewById(R.id.asProfile2);
+
+
+        ///---//////
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid();
@@ -76,6 +91,8 @@ public class PostActivity extends AppCompatActivity {
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         loadingBar = new ProgressDialog(this);
+
+
 
 
         Compressor compressor = new Compressor(this);
@@ -94,6 +111,32 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+
+
+        try {
+            UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                        try {
+                            String image = dataSnapshot.child("profileImage").getValue().toString();
+                            Picasso.with(PostActivity.this).load(image).placeholder(R.drawable.hanni).into(upProfileImage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void ValiDatePostInfo() {
@@ -116,7 +159,11 @@ public class PostActivity extends AppCompatActivity {
 
         }
 
+
+
     }
+
+
 
     private void StorinImageToFireBaseStorge() {
 
@@ -167,6 +214,12 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+
+
+    ///------
     private void SaveingPostInfomationToDataBase() {
 
         UserRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
@@ -221,6 +274,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
+
     private void OpenGallaery() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -240,7 +294,7 @@ public class PostActivity extends AppCompatActivity {
              ImageUri = data.getData();
 
             didPickImage = true;
-            Picasso.with(this).load(data.getData()).resize(300, 300).into(SelectPostImage);
+            Picasso.with(this).load(data.getData()).resize(500 , 385).into(SelectPostImage);
             //  SelectPostImage.setImageURI(ImageUri);
         }
 
@@ -266,8 +320,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-
-
+    // TODO: 4/6/18 בקובץ זה יש הכל כדי להכניס תמונה למעלה אך הבעיה היא שצריך פלייסהולדר זה יקח הרבה זמן אבל שווה לעשות ! ואז התמונת פרופיל תוצג בכל הסרגלים :)
 
 
 }

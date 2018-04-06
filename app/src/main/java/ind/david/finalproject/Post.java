@@ -8,9 +8,11 @@ public class Post
 {
     public String date,description,full_name,postimages,profileImage,time,uid;
 
+    public long numOfLikes;
+
     public Post() {}
 
-    public Post(String date, String description, String fullname, String postimage, String profileImage, String time, String uid) {
+    public Post(String date, String description, String fullname, String postimage, String profileImage, String time, String uid,long numOfLikes) {
         this.date = date;
         this.description = description;
         this.full_name = fullname;
@@ -18,6 +20,7 @@ public class Post
         this.profileImage = profileImage;
         this.time = time;
         this.uid = uid;
+        this.numOfLikes = numOfLikes;
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,16 +81,25 @@ public class Post
         this.uid = uid;
     }
 
+    public long getNumOfLikes () {
+        return numOfLikes;
+    }
+
+    public void setNumOfLikes (long numOfLikes) {
+        this.numOfLikes = numOfLikes;
+    }
+
     @Override
-    public String toString() {
+    public String toString () {
         return "Post{" +
                 "date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 ", full_name='" + full_name + '\'' +
-                ", postimage='" + postimages + '\'' +
+                ", postimages='" + postimages + '\'' +
                 ", profileImage='" + profileImage + '\'' +
                 ", time='" + time + '\'' +
                 ", uid='" + uid + '\'' +
+                ", numOfLikes=" + numOfLikes +
                 '}';
     }
 

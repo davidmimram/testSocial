@@ -34,6 +34,25 @@
         app:layout_constraintVertical_bias="0.077"
         app:srcCompat="@drawable/photomain" />
 
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/mapping3"
+        android:layout_width="60dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="#B1B1B1"
+        app:lottie_fileName="mappoint.json"
+        app:lottie_loop="true"/>
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/mainUserImage"
         android:layout_width="38dp"
@@ -266,7 +285,7 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/likenumbers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -408,7 +427,7 @@
         android:layout_width="7dp"
         android:layout_height="9dp"
         android:layout_marginStart="7dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline18"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
         app:layout_constraintStart_toStartOf="@+id/guideline3"

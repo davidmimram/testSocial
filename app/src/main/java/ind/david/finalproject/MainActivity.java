@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,11 +55,14 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseLike;
     private boolean mProcessClickLike = false;
 
-    //-------comments-------//
+    //-------test-------//
+    private ViewPager viewPager;
 
 
 
     //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
 
 
 
@@ -95,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
 
 
+
+//        sendLikestofirebase();
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
 
         try {
@@ -156,6 +163,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+//
+//    private void sendLikestofirebase () {
+//
+//        Post post = new Post ();
+//        String UID = Utils.getUid ();
+//
+//        post.setUid (UID);
+//        post.setNumOfLikes(0);
+//        post.setPostimage ("gs://socialapp-701ea.appspot.com/Posts/Post_04-04-201801-58.jpg");
+//        PostRef.child (currentUserID).setValue (post);
+//    }
 
 
     // בדיקת כפתורים
@@ -226,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                             PostViewHolder.class,
                             PostRef) {
                         @Override
-                        protected void populateViewHolder(final PostViewHolder viewHolder, Post model, int position) {
+                        protected void populateViewHolder(final PostViewHolder viewHolder, final Post model, int position) {
 
                             //------new 3.4.2018------//
                             final String post_key = getRef(position).getKey ();
@@ -243,14 +261,14 @@ public class MainActivity extends AppCompatActivity {
 
                             //------new 3.4.2018------//
                             viewHolder.setmLikeBtn (post_key);
+                            //---todo---new 5.4.2018-----//
+//                            viewHolder.setNumLikes (model.getNumOfLikes ());
 
                             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+//                                updateNumOfLikes(model.getUid ());
 
-/*
-                                    Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
-*/
                                 }
                             });
 
@@ -265,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                         if (mProcessClickLike) {
+                                            Toast.makeText(MainActivity.this, "סימנת ״אהבתי״ - הפריט נשמר.", Toast.LENGTH_SHORT).show();
 
                                             if (dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())) {
 
@@ -272,9 +291,11 @@ public class MainActivity extends AppCompatActivity {
                                                 mProcessClickLike = false;
 
 
+
                                             } else {
                                                 mDatabaseLike.child (post_key).child (mAuth.getCurrentUser ().getUid ()).setValue ("RandomValue");
                                                 mProcessClickLike = false;
+
                                             }
                                         }
                                     }
@@ -310,9 +331,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void todo1 (View view) {
+        Toast.makeText (this, "כאן יהיה דיאלוג בוקס ", Toast.LENGTH_SHORT).show ();
+    }
 
 
-
+    //todo today 5.4.2018:
+//    private void updateNumOfLikes (String uid) {
+//
+//
+//        PostRef.child (uid).child ("NumOfLikes").runTransaction (new Transaction.Handler () {
+//            @Override
+//            public Transaction.Result doTransaction (MutableData mutableData) {
+//                long num = (long) mutableData.getValue ();
+//                num++;
+//                mutableData.setValue (num);
+//               return Transaction.success (mutableData);
+//
+//            }
+//
+//            @Override
+//            public void onComplete (DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//            }
+//        });
+//
+//
+//    }
 
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
@@ -323,6 +368,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView mLikeBtn;
         DatabaseReference mDatabaseLike;
+        TextView numLikes; // TODO: 4/5/18 not working!
+
         FirebaseAuth mAuth;
 
         //^^^^^^^^^^^^^^^^^^^^^^^^^//
@@ -335,11 +382,23 @@ public class MainActivity extends AppCompatActivity {
 
             //------new 3.4.2018------//
             mLikeBtn = (ImageView) mView.findViewById(R.id.likeIcon);
+//            numLikes = (TextView)  mView.findViewById (R.id.likenumbers);
             mDatabaseLike = FirebaseDatabase.getInstance ().getReference ().child ("Likes");
             mAuth = FirebaseAuth.getInstance ();
 
             mDatabaseLike.keepSynced (true);
         }
+
+
+        public void setNumLikes (long num){
+
+        // מספר הלייקים
+
+        }
+
+
+
+
         public void setmLikeBtn(final String post_key){
 
 
@@ -353,6 +412,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
+                    //
                     // כאן הקוד של האנימציה
 
 
@@ -416,9 +476,10 @@ public class MainActivity extends AppCompatActivity {
             ImageView Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
             Picasso.with(ctx).load(postimages).into(Postimage);
 
-            // זום אין לתמונת פוסט
+            // זום אין לתמונת פוסט zoom
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
             photoViewAttacher.update ();
+//            photoViewAttacher.getScale ();
 
 
             //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
