@@ -62,7 +62,7 @@
         app:layout_constraintGuide_percent="0.9557292" />
 
     <ImageView
-        android:id="@+id/imageView22"
+        android:id="@+id/pullbear"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"
@@ -71,11 +71,11 @@
         app:srcCompat="@drawable/paulbear" />
 
     <ImageView
-        android:id="@+id/imageView23"
+        android:id="@+id/breshka"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView22"
+        app:layout_constraintStart_toEndOf="@+id/pullbear"
         app:layout_constraintTop_toTopOf="@+id/guideline52"
         app:srcCompat="@drawable/breshka" />
 
@@ -87,38 +87,38 @@
         app:layout_constraintGuide_percent="0.45" />
 
     <ImageView
-        android:id="@+id/imageView24"
+        android:id="@+id/castro"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView23"
+        app:layout_constraintStart_toEndOf="@+id/breshka"
         app:layout_constraintTop_toTopOf="@+id/guideline52"
         app:srcCompat="@drawable/castro" />
 
     <ImageView
-        android:id="@+id/imageView25"
+        android:id="@+id/zara"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView24"
+        app:layout_constraintStart_toEndOf="@+id/castro"
         app:layout_constraintTop_toBottomOf="@+id/guideline52"
         app:srcCompat="@drawable/zara" />
 
     <ImageView
-        android:id="@+id/imageView26"
+        android:id="@+id/factory"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView25"
+        app:layout_constraintStart_toEndOf="@+id/zara"
         app:layout_constraintTop_toBottomOf="@+id/guideline52"
         app:srcCompat="@drawable/factory" />
 
     <ImageView
-        android:id="@+id/imageView27"
+        android:id="@+id/mango"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView26"
+        app:layout_constraintStart_toEndOf="@+id/factory"
         app:layout_constraintTop_toBottomOf="@+id/guideline52"
         app:srcCompat="@drawable/mango" />
 
@@ -278,7 +278,7 @@
         app:srcCompat="@drawable/linetwo" />
 
     <Button
-        android:id="@+id/postButton"
+        android:id="@+id/postButton2"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginBottom="8dp"

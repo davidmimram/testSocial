@@ -2,6 +2,7 @@ package ind.david.finalproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements View.OnClickListener{
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //defult
@@ -57,6 +58,27 @@ public class PostActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
 
 
+    private HashMap<Integer,Boolean> iconStore;
+    private int counter;
+
+
+
+    private ImageView castro,mango,zara,factory,breshka,pullbear;
+
+
+
+
+
+
+
+
+
+
+    //test
+    SharedPreferences sharedpreference;
+
+
+
     String currentUserID;
     private CircleImageView upProfileImage;
 
@@ -64,6 +86,8 @@ public class PostActivity extends AppCompatActivity {
     private static final int Gallery_Pick = 1;
 
 
+
+    //OnnnnnnnCreated!!!!!!!!
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +95,51 @@ public class PostActivity extends AppCompatActivity {
 
         returnIcon = (ImageView) findViewById(R.id.back);
         SelectPostImage = (ImageButton) findViewById(R.id.selectPostImage);
-        UpdatePostButton = (Button) findViewById(R.id.postButton);
+        UpdatePostButton = (Button) findViewById(R.id.postButton2);
         postDescripition = (EditText) findViewById(R.id.PostText);
 
-    ///----------///
+
+    //~~~~dvir 10.4.2018~~~~/
+        iconStore = new HashMap<> ();
+        counter = 0;
+        iconStore.put (R.drawable.paulbear,false);
+        iconStore.put (R.drawable.breshka,false);
+        iconStore.put (R.drawable.castro,false);
+        iconStore.put (R.drawable.zara,false);
+        iconStore.put (R.drawable.factory,false);
+        iconStore.put (R.drawable.mango,false);
+
+
+
+
+
+        //------- todo NOT WORING ! ------///
+        castro = (ImageView) findViewById (R.id.castro);
+        zara = (ImageView) findViewById (R.id.zara);
+        factory = (ImageView) findViewById (R.id.factory);
+        pullbear = (ImageView) findViewById (R.id.pullbear);
+        mango = (ImageView) findViewById (R.id.mango);
+        breshka = (ImageView) findViewById (R.id.breshka);
+
+
+        castro.setOnClickListener (this);
+        zara.setOnClickListener (this);
+        factory.setOnClickListener (this);
+        pullbear.setOnClickListener (this);
+        mango.setOnClickListener (this);
+        breshka.setOnClickListener (this);
+
+
+
+
+
+        //------- todo NOT WORING ! ------///
+
+
+
+
+
+        ///----------///
         try {
             currentUserID = mAuth.getCurrentUser().getUid();
         } catch (Exception e) {
@@ -163,6 +228,112 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onClick (View v) {
+        switch (v.getId ()) {
+            case R.id.zara:
+                //dvir king of the world! thank u !
+
+                    if (iconStore.get (R.drawable.zara).equals (true)){
+                        zara.setImageResource (R.drawable.zara);
+                        iconStore.put (R.drawable.zara,false);
+                        counter--;
+                    } else if (counter < 3 ) {
+                        iconStore.put (R.drawable.zara,true);
+                        zara.setImageResource (R.drawable.zarach);
+
+                        counter++;
+                    }
+                break;
+
+            case R.id.castro:
+//
+                //dvir king of the world! thank u !
+
+                if (iconStore.get (R.drawable.castro).equals (true)){
+                    castro.setImageResource (R.drawable.castro);
+                    iconStore.put (R.drawable.castro,false);
+                    counter--;
+                } else if (counter < 3 ) {
+                    iconStore.put (R.drawable.castro,true);
+                    castro.setImageResource (R.drawable.castroch);
+
+                    counter++;
+                }
+                break;
+
+            case R.id.pullbear:
+
+                //dvir king of the world! thank u !
+                if (iconStore.get (R.drawable.paulbear).equals (true)){
+                    pullbear.setImageResource (R.drawable.paulbear);
+                    iconStore.put (R.drawable.paulbear,false);
+                    counter--;
+                } else if (counter < 3 ) {
+                    iconStore.put (R.drawable.paulbear,true);
+                    pullbear.setImageResource (R.drawable.pullbearch);
+
+                    counter++;
+                }
+
+                break;
+
+
+            case R.id.factory:
+                //dvir king of the world! thank u !
+                if (iconStore.get (R.drawable.factory).equals (true)){
+                    factory.setImageResource (R.drawable.factory);
+                    iconStore.put (R.drawable.factory,false);
+                    counter--;
+                } else if (counter < 3 ) {
+                    iconStore.put (R.drawable.factory,true);
+                    factory.setImageResource (R.drawable.factorych);
+
+                    counter++;
+                }
+
+                break;
+
+
+            case R.id.breshka:
+                if (iconStore.get (R.drawable.breshka).equals (true)){
+                    breshka.setImageResource (R.drawable.breshka);
+                    iconStore.put (R.drawable.breshka,false);
+                    counter--;
+                } else if (counter < 3 )
+                {
+                    iconStore.put (R.drawable.breshka,true);
+                    breshka.setImageResource (R.drawable.breskach);
+
+                    counter++;
+                }
+
+                break;
+
+
+
+            case R.id.mango:
+                //dvir king of the world! thank u !
+                if (iconStore.get (R.drawable.mango).equals (true)){
+
+                    mango.setImageResource (R.drawable.mango);
+                    iconStore.put (R.drawable.mango,false);
+                    counter--;
+                } else if (counter < 3 ){
+
+                    iconStore.put (R.drawable.mango,true);
+                    mango.setImageResource (R.drawable.mangoch);
+
+                    counter++;
+
+                }
+                break;
+
+
+        }
+
+    }
 
 
     private void StorinImageToFireBaseStorge() {
@@ -318,6 +489,17 @@ public class PostActivity extends AppCompatActivity {
         // כאן היוזר בונה את הדאטה של עצמו
 
     }
+
+
+
+    // כפתורים
+
+
+
+
+    //ICONS Post:
+
+
 
 
     // TODO: 4/6/18 בקובץ זה יש הכל כדי להכניס תמונה למעלה אך הבעיה היא שצריך פלייסהולדר זה יקח הרבה זמן אבל שווה לעשות ! ואז התמונת פרופיל תוצג בכל הסרגלים :)
