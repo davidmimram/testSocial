@@ -1,9 +1,7 @@
 package ind.david.finalproject;
 
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
@@ -12,10 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,16 +58,10 @@ public class MainActivity extends AppCompatActivity {
     //-------test-------//
     private ViewPager viewPager;
 
-    //iconpost
-    private ImageView shop1,shop2,shop3;
 
-    // 9.4.2018 //
-    private static final DecelerateInterpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator ();
-    private  static final AccelerateDecelerateInterpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator ();
+
     //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
-
-    SharedPreferences sharedpreference;
 
 
 
@@ -87,12 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         //------new 3.4.2018------//
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLike.keepSynced(true);
-
-
 
 
         //--------comments---------//
@@ -110,20 +98,6 @@ public class MainActivity extends AppCompatActivity {
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
-
-
-        //shopicons:
-        shop1 = findViewById (R.id.shop1);
-        shop2 = findViewById (R.id.shop2);
-        shop3 = findViewById (R.id.shop3);
-
-
-
-        //
-
-//        String value = sharedpreference.getString("button_value","");
-
-
 
 
 
@@ -183,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
         getSupportActionBar().setTitle("Home")*/
         ;
+
 
 
 
@@ -361,15 +336,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    ///ניסיון
-
-
-
-
-
-
-
     //todo today 5.4.2018:
 //    private void updateNumOfLikes (String uid) {
 //
@@ -436,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
         public void setmLikeBtn(final String post_key){
 
 
-            final AnimatorSet animatorSet = new AnimatorSet ();
+
 
         mDatabaseLike.addValueEventListener (new ValueEventListener () {
             @Override
@@ -446,23 +412,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
-
-                    // 9.4.2018
-//                    mLikeBtn.setScaleX (1.0f);
-//                    mLikeBtn.setScaleY (1.0f);
-//                    ObjectAnimator scaleDownY = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    ObjectAnimator scaleDownX = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    mLikeBtn.setVisibility (View.GONE);
-//                    mLikeBtn.setVisibility (View.VISIBLE);
-//
-//                    animatorSet.playTogether (scaleDownY,scaleDownX);
-
                     //
                     // כאן הקוד של האנימציה
 
@@ -472,21 +421,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestiongrey);
 
-//                    // 9.4.2018
-//                    mLikeBtn.setScaleX (1.0f);
-//                    mLikeBtn.setScaleY (1.0f);
-//                    ObjectAnimator scaleDownY = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    ObjectAnimator scaleDownX = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    mLikeBtn.setVisibility (View.GONE);
-//                    mLikeBtn.setVisibility (View.VISIBLE);
-//
-//                    animatorSet.playTogether (scaleDownY,scaleDownX);
 
                 }
             }
@@ -543,8 +477,8 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttacher.update ();
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
 //            photoViewAttacher.getScale ();
 
 
@@ -709,11 +643,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(intent);
     }
-
-
-
-
-
 
 
 
