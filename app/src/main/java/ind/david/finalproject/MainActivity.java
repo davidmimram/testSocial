@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -582,9 +583,9 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttacher.update ();
-//            photoViewAttacher.getScale ();
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
+            photoViewAttacher.getScale ();
 
 
             //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
