@@ -73,6 +73,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
     //test
     SharedPreferences sharedpreference;
 
@@ -153,6 +154,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         loadingBar = new ProgressDialog(this);
+
 
 
 
@@ -334,7 +336,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
     private void StorinImageToFireBaseStorge() {
 
         Calendar callforDate = Calendar.getInstance();
@@ -404,6 +405,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     postMap.put("profileImage", profileImage);
                     postMap.put("fullName", userFullName);
                     postMap.put("iconStore",iconStore);
+                    postMap.put ("Likecount",0);
                     PostsRef.child(current_user_id + timeOfImage).updateChildren(postMap).addOnSuccessListener (new OnSuccessListener () {
                         @Override
                         public void onSuccess (Object o) {

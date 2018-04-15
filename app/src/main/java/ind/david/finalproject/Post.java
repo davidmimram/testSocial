@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Post {
     public String date, description, fullName, postimage, profileImage, time, uid;
-    public long numOfLikes;
+    int likecount;
     public HashMap<String, Boolean> iconStore;
 
 
@@ -16,7 +16,8 @@ public class Post {
     public Post () {
     }
 
-    public Post (String date, String description, String fullName, String postimage, String profileImage, String time, String uid, long numOfLikes, HashMap<String, Boolean> iconStore) {
+
+    public Post (String date, String description, String fullName, String postimage, String profileImage, String time, String uid, int numOfLikes, HashMap<String, Boolean> iconStore,int likecount) {
         this.date = date;
         this.description = description;
         this.fullName = fullName;
@@ -24,10 +25,9 @@ public class Post {
         this.profileImage = profileImage;
         this.time = time;
         this.uid = uid;
-        this.numOfLikes = numOfLikes;
         this.iconStore = iconStore;
+        this.likecount = likecount;
     }
-
 
     public String getDate () {
         return date;
@@ -85,14 +85,6 @@ public class Post {
         this.uid = uid;
     }
 
-    public long getNumOfLikes () {
-        return numOfLikes;
-    }
-
-    public void setNumOfLikes (long numOfLikes) {
-        this.numOfLikes = numOfLikes;
-    }
-
     public HashMap<String, Boolean> getIconStore () {
         return iconStore;
     }
@@ -101,6 +93,13 @@ public class Post {
         this.iconStore = iconStore;
     }
 
+    public int getLikecount () {
+        return likecount;
+    }
+
+    public void setLikecount (int likecount) {
+        this.likecount = likecount;
+    }
 
     @Override
     public String toString () {
@@ -112,8 +111,10 @@ public class Post {
                 ", profileImage='" + profileImage + '\'' +
                 ", time='" + time + '\'' +
                 ", uid='" + uid + '\'' +
-                ", numOfLikes=" + numOfLikes +
                 ", iconStore=" + iconStore +
+                ", likecount=" + likecount +
+
                 '}';
+
     }
 }

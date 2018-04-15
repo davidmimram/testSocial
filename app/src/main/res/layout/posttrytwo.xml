@@ -285,11 +285,11 @@
 
 
     <TextView
-        android:id="@+id/likenumbers"
+        android:id="@+id/tvlikenumbers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="120 לייקים"
+        android:text="0"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"

@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,18 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
     //------new 3.4.2018------//
     private DatabaseReference mDatabaseLike;
+    private DatabaseReference mDatabaseLikeCount;
+
+
     private boolean mProcessClickLike = false;
 
-    //-------test-------//
     private ViewPager viewPager;
 
     //iconpost
     private ImageView shop1,shop2,shop3;
 
-    // 9.4.2018 //
     private static final DecelerateInterpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator ();
     private  static final AccelerateDecelerateInterpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator ();
-    //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
     private HashMap<String,Boolean> iconStore2;
@@ -99,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLike.keepSynced(true);
 
+        //14.4.2018
+        mDatabaseLikeCount = FirebaseDatabase.getInstance().getReference().child("Posts");
+        mDatabaseLikeCount.keepSynced(true);
+
 
 
         iconStore2 = new HashMap<> ();
@@ -119,23 +122,6 @@ public class MainActivity extends AppCompatActivity {
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
 
 
-
-
-
-
-
-        //
-
-//        String value = sharedpreference.getString("button_value","");
-
-
-
-
-
-//        sendLikestofirebase();
-        //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
-
-
             UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -153,20 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-        //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~~~~~~~~~~~~~~~
-
-
-        //todo: david changed a few things!
 
         postList = (RecyclerView) findViewById(R.id.all_user_post_list);
         postList.setHasFixedSize(true);
 
-
-        /*
-         * todo oz:
-         * fix 1: enable these methods to show the posts. make sure your DisplayallUserPost();
-         * running at the end of them
-         */
 
         DisplayallUserPost();
 
@@ -177,27 +153,11 @@ public class MainActivity extends AppCompatActivity {
         postList.setAdapter(firebaseRecycleAdepter);
 
 
-        /*
-        mToolBar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolBar);
-        getSupportActionBar().setTitle("Home")*/
-        ;
 
 
 
 
     }
-//
-//    private void sendLikestofirebase () {
-//
-//        Post post = new Post ();
-//        String UID = Utils.getUid ();
-//
-//        post.setUid (UID);
-//        post.setNumOfLikes(0);
-//        post.setPostimage ("gs://socialapp-701ea.appspot.com/Posts/Post_04-04-201801-58.jpg");
-//        PostRef.child (currentUserID).setValue (post);
-//    }
 
 
     // בדיקת כפתורים
@@ -282,6 +242,16 @@ public class MainActivity extends AppCompatActivity {
                         viewHolder.setProfileImage (getApplicationContext (), model.getProfileImage ());
                         viewHolder.setPostimage (getApplicationContext (), model.getPostimage ());
 
+
+                        //^^^^^^^^^^^^^^^^^^
+                        //14.4.2018
+                        viewHolder.setLikeacount (model.getLikecount ());
+//                        viewHolder.setLikeacount (model.getNumOfLikes ()); -- זה המקורי
+
+
+
+                        //Icon Secssion:
+                        //^^^^^^^^^^^^^^^^^^
                         iconStore2 = model.getIconStore ();
 
 
@@ -322,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
                             //------new 3.4.2018------//
                             viewHolder.setmLikeBtn (post_key);
                             //---todo---new 5.4.2018-----//
-//                            viewHolder.setNumLikes (model.getNumOfLikes ());
 
                             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -338,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     mProcessClickLike = true;
 
-                                    mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                                    mDatabaseLikeCount .addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -347,14 +316,30 @@ public class MainActivity extends AppCompatActivity {
 
                                             if (dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())) {
 
-                                                mDatabaseLike.child (post_key).child (mAuth.getCurrentUser ().getUid ()).removeValue ();
-                                                mProcessClickLike = false;
+                                                mDatabaseLikeCount.child (post_key).child (mAuth.getCurrentUser ().getUid ()).removeValue ();
 
+
+                                                //~~~~~~~14.4.2017~~~~~~//;
+                                                int likecount = 0;
+                                                mDatabaseLikeCount.child (post_key).child ("likecount").setValue (likecount -1);
+                                                likecount = dataSnapshot.child (post_key).child ("likecount").getValue (Integer.class);
+                                                //~~~-------------~~~~~//
+
+                                                mProcessClickLike = false;
 
 
                                             } else {
-                                                mDatabaseLike.child (post_key).child (mAuth.getCurrentUser ().getUid ()).setValue ("RandomValue");
+                                                mDatabaseLikeCount.child (post_key).child (mAuth.getCurrentUser ().getUid ()).setValue ("Like");
+
+                                                //~~~~~~~14.4.2017~~~~~~//;
+                                                int likecount = 0;
+                                                mDatabaseLikeCount.child (post_key).child ("likecount").setValue (likecount +1);
+                                                likecount = dataSnapshot.child (post_key).child ("likecount").getValue (Integer.class);
+                                                //~~~-------------~~~~~//
+
                                                 mProcessClickLike = false;
+
+
 
                                             }
                                         }
@@ -403,28 +388,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //todo today 5.4.2018:
-//    private void updateNumOfLikes (String uid) {
-//
-//
-//        PostRef.child (uid).child ("NumOfLikes").runTransaction (new Transaction.Handler () {
-//            @Override
-//            public Transaction.Result doTransaction (MutableData mutableData) {
-//                long num = (long) mutableData.getValue ();
-//                num++;
-//                mutableData.setValue (num);
-//               return Transaction.success (mutableData);
-//
-//            }
-//
-//            @Override
-//            public void onComplete (DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-//
-//            }
-//        });
-//
-//
-//    }
 
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
@@ -435,7 +398,10 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView mLikeBtn;
         DatabaseReference mDatabaseLike;
-        TextView numLikes; // TODO: 4/5/18 not working!
+
+        //14.4.2018//
+        TextView tvlikeCount;
+        //--------//
 
         FirebaseAuth mAuth;
 
@@ -449,19 +415,16 @@ public class MainActivity extends AppCompatActivity {
 
             //------new 3.4.2018------//
             mLikeBtn = (ImageView) mView.findViewById(R.id.likeIcon);
-//            numLikes = (TextView)  mView.findViewById (R.id.likenumbers);
+
             mDatabaseLike = FirebaseDatabase.getInstance ().getReference ().child ("Likes");
+
             mAuth = FirebaseAuth.getInstance ();
 
             mDatabaseLike.keepSynced (true);
         }
 
 
-        public void setNumLikes (long num){
 
-        // מספר הלייקים
-
-        }
 
 
 
@@ -480,46 +443,9 @@ public class MainActivity extends AppCompatActivity {
 
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
 
-                    // 9.4.2018
-//                    mLikeBtn.setScaleX (1.0f);
-//                    mLikeBtn.setScaleY (1.0f);
-//                    ObjectAnimator scaleDownY = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    ObjectAnimator scaleDownX = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    mLikeBtn.setVisibility (View.GONE);
-//                    mLikeBtn.setVisibility (View.VISIBLE);
-//
-//                    animatorSet.playTogether (scaleDownY,scaleDownX);
-
-                    //
-                    // כאן הקוד של האנימציה
-
-
-
 
                 } else {
                     mLikeBtn.setImageResource (R.drawable.btn_like_suggestiongrey);
-
-//                    // 9.4.2018
-//                    mLikeBtn.setScaleX (1.0f);
-//                    mLikeBtn.setScaleY (1.0f);
-//                    ObjectAnimator scaleDownY = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    ObjectAnimator scaleDownX = ObjectAnimator.ofFloat (mLikeBtn, "ScaleY",1f,0f);
-//                    scaleDownY.setDuration (300);
-//                    scaleDownY.setInterpolator (ACCELERATE_DECELERATE_INTERPOLATOR);
-//
-//                    mLikeBtn.setVisibility (View.GONE);
-//                    mLikeBtn.setVisibility (View.VISIBLE);
-//
-//                    animatorSet.playTogether (scaleDownY,scaleDownX);
 
                 }
             }
@@ -533,6 +459,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
         //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
+        //14.4.2018
 
 
 
@@ -551,20 +480,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        /*        public void setTime(String time)
-                {
-
-                    TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
-                    PostTime.setText("   " + time);
-
-                }
-
-                public void setDate(String date)
-                {
-                    TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
-                    PostDate.setText("   " +date);
-
-                }*/
 
         private static void setShopImage(ArrayList<ImageView> iconImgArray,HashMap<String,Boolean> iconStore2,ArrayList<String> iconUid,Context context,View mView) {
 
@@ -583,9 +498,9 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-            photoViewAttacher.update ();
-            photoViewAttacher.getScale ();
+//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+//            photoViewAttacher.update ();
+//            photoViewAttacher.getScale ();
 
 
             //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
@@ -593,6 +508,17 @@ public class MainActivity extends AppCompatActivity {
 
          /*   Postimage.getLayoutParams().height = 321; // OR
             Postimage.getLayoutParams().width = 361;*/
+        }
+
+        public void setLikeacount (Integer likecount) {
+
+
+            tvlikeCount = (TextView) mView.findViewById (R.id.tvlikenumbers);
+//            tvlikeCount.setText (Integer.toString (Integer.parseInt(String.valueOf (likecount))));
+//            tvlikeCount.setText (likecount);
+
+
+            tvlikeCount.setText (Integer.toString (Integer.parseInt(String.valueOf (likecount))));
         }
     }
 
@@ -759,11 +685,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*    Animator spruceAnimator = new Spruce
-            .SpruceBuilder(postList)
-            .sortWith(new DefaultSort(*//*interObjectDelay=*//*50L))
-            .animateWith(new Animator[]{DefaultAnimations.shrinkAnimator(postList, *//*duration=*//*800)})
-            .start();*/
+
+
+
 
 }
 

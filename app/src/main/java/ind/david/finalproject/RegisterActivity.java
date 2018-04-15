@@ -72,21 +72,21 @@ public class RegisterActivity extends AppCompatActivity {
         String confirmPassword=userConfirmPassword.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"please write your email...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"אנא הכנס אימייל",Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"please write your password...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"אנא הכנס סיסמא ",Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(confirmPassword)) {
-            Toast.makeText(this, "please confirm your password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "אשר את סיסמתך שנית", Toast.LENGTH_SHORT).show();
         }
         else if(!password.equals(confirmPassword) )
         {
-            Toast.makeText(this, "your password do not match your confirm password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "הסיסמא אינה תואמת לסיסמאת אימות", Toast.LENGTH_SHORT).show();
         }
         else
-            loadingBar.setTitle("creating New Account");
-        loadingBar.setMessage("please wait,while we are creating your new Account");
+            loadingBar.setTitle("החשבון נוצר אנא המתן");
+        loadingBar.setMessage("אנא המתן בעת יצירת החשבון !");
         loadingBar.show();
         loadingBar.setCanceledOnTouchOutside(true);
 
