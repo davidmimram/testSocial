@@ -16,9 +16,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +57,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog loadingBar;
 
 
-    private HashMap<Integer,Boolean> iconStore;
+    private HashMap<String,Boolean> iconStore;
     private int counter;
 
 
@@ -102,12 +101,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     //~~~~dvir 10.4.2018~~~~/
         iconStore = new HashMap<> ();
         counter = 0;
-        iconStore.put (R.drawable.paulbear,false);
-        iconStore.put (R.drawable.breshka,false);
-        iconStore.put (R.drawable.castro,false);
-        iconStore.put (R.drawable.zara,false);
-        iconStore.put (R.drawable.factory,false);
-        iconStore.put (R.drawable.mango,false);
+        iconStore.put ("paulbear",false);
+        iconStore.put ("breshka",false);
+        iconStore.put ("castro",false);
+        iconStore.put ("zara",false);
+        iconStore.put ("factory",false);
+        iconStore.put ("mango",false);
 
 
 
@@ -140,11 +139,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
         ///----------///
-        try {
-            currentUserID = mAuth.getCurrentUser().getUid();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+//        currentUserID = mAuth.getCurrentUser().getUid();
+
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile2);
 
 
@@ -178,29 +175,24 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        try {
-            UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+
+            UserRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
+                    if (dataSnapshot.exists ()) {
 
-                        try {
-                            String image = dataSnapshot.child("profileImage").getValue().toString();
-                            Picasso.with(PostActivity.this).load(image).placeholder(R.drawable.hanni).into(upProfileImage);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+
+                        String image = dataSnapshot.child ("profileImage").getValue ().toString ();
+                        Picasso.with (PostActivity.this).load (image).placeholder (R.drawable.hanni).into (upProfileImage);
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Toast.makeText (PostActivity.this, databaseError.getMessage (), Toast.LENGTH_SHORT).show ();
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -213,6 +205,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "הינך חייב למלאות כ10 תווים לפחות", Toast.LENGTH_SHORT).show();
 
         } else {
+            for (int i = 0; i < iconStore.size () ; i++) {
+                iconStore.values ().remove (false);
+
+            }
+
+
+//            Toast.makeText (this, iconStore.size (), Toast.LENGTH_SHORT).show ();
             StorinImageToFireBaseStorge();
             //------------------------------------
             // תיבה מה קורה בזמן שנוצר החשבון
@@ -235,12 +234,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.zara:
                 //dvir king of the world! thank u !
 
-                    if (iconStore.get (R.drawable.zara).equals (true)){
+                    if (iconStore.get ("zara").equals (true)){
                         zara.setImageResource (R.drawable.zara);
-                        iconStore.put (R.drawable.zara,false);
+                        iconStore.put ("zara",false);
                         counter--;
                     } else if (counter < 3 ) {
-                        iconStore.put (R.drawable.zara,true);
+                        iconStore.put ("zara",true);
                         zara.setImageResource (R.drawable.zarach);
 
                         counter++;
@@ -251,12 +250,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 //
                 //dvir king of the world! thank u !
 
-                if (iconStore.get (R.drawable.castro).equals (true)){
+                if (iconStore.get ("castro").equals (true)){
                     castro.setImageResource (R.drawable.castro);
-                    iconStore.put (R.drawable.castro,false);
+                    iconStore.put ("castro",false);
                     counter--;
                 } else if (counter < 3 ) {
-                    iconStore.put (R.drawable.castro,true);
+                    iconStore.put ("castro",true);
                     castro.setImageResource (R.drawable.castroch);
 
                     counter++;
@@ -266,12 +265,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.pullbear:
 
                 //dvir king of the world! thank u !
-                if (iconStore.get (R.drawable.paulbear).equals (true)){
+                if (iconStore.get ("paulbear").equals (true)){
                     pullbear.setImageResource (R.drawable.paulbear);
-                    iconStore.put (R.drawable.paulbear,false);
+                    iconStore.put ("paulbear",false);
                     counter--;
                 } else if (counter < 3 ) {
-                    iconStore.put (R.drawable.paulbear,true);
+                    iconStore.put ("paulbear",true);
                     pullbear.setImageResource (R.drawable.pullbearch);
 
                     counter++;
@@ -282,12 +281,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.factory:
                 //dvir king of the world! thank u !
-                if (iconStore.get (R.drawable.factory).equals (true)){
+                if (iconStore.get ("factory").equals (true)){
                     factory.setImageResource (R.drawable.factory);
-                    iconStore.put (R.drawable.factory,false);
+                    iconStore.put ("factory",false);
                     counter--;
                 } else if (counter < 3 ) {
-                    iconStore.put (R.drawable.factory,true);
+                    iconStore.put ("factory",true);
                     factory.setImageResource (R.drawable.factorych);
 
                     counter++;
@@ -297,13 +296,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.breshka:
-                if (iconStore.get (R.drawable.breshka).equals (true)){
+                if (iconStore.get ("breshka").equals (true)){
                     breshka.setImageResource (R.drawable.breshka);
-                    iconStore.put (R.drawable.breshka,false);
+                    iconStore.put ("breshka",false);
                     counter--;
                 } else if (counter < 3 )
                 {
-                    iconStore.put (R.drawable.breshka,true);
+                    iconStore.put ("breshka",true);
                     breshka.setImageResource (R.drawable.breskach);
 
                     counter++;
@@ -315,14 +314,14 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.mango:
                 //dvir king of the world! thank u !
-                if (iconStore.get (R.drawable.mango).equals (true)){
+                if (iconStore.get ("mango").equals (true)){
 
                     mango.setImageResource (R.drawable.mango);
-                    iconStore.put (R.drawable.mango,false);
+                    iconStore.put ("mango",false);
                     counter--;
                 } else if (counter < 3 ){
 
-                    iconStore.put (R.drawable.mango,true);
+                    iconStore.put ("mango",true);
                     mango.setImageResource (R.drawable.mangoch);
 
                     counter++;
@@ -355,22 +354,16 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        filePath.putFile(ImageUri).addOnSuccessListener (new OnSuccessListener<UploadTask.TaskSnapshot> () {
             @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+            public void onSuccess (UploadTask.TaskSnapshot taskSnapshot) {
 
-                if (task.isSuccessful()) {
+                downloadUrl = taskSnapshot.getDownloadUrl ().toString ();
 
-                    downloadUrl = task.getResult().getDownloadUrl().toString();
-
-                    Toast.makeText(PostActivity.this, "התמונה עלתה בהצלחה!", Toast.LENGTH_SHORT).show();
+                Toast.makeText (PostActivity.this, "התמונה עלתה בהצלחה!", Toast.LENGTH_SHORT).show ();
 
 
-                    SaveingPostInfomationToDataBase();
-                } else {
-                    String message = task.getException().getMessage();
-                    Toast.makeText(PostActivity.this, "שגיאה בהעלאת התמונה" + message, Toast.LENGTH_SHORT).show();
-                }
+                SaveingPostInfomationToDataBase ();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -409,28 +402,27 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     postMap.put("description", Descripition);
                     postMap.put("postimage", downloadUrl);
                     postMap.put("profileImage", profileImage);
-                    postMap.put("full_name", userFullName);
-                    PostsRef.child(current_user_id + timeOfImage).updateChildren(postMap).addOnCompleteListener
-                            (new OnCompleteListener() {
-                                @Override
-                                public void onComplete(@NonNull Task task) {
-                                    if (task.isSuccessful()) {
+                    postMap.put("fullName", userFullName);
+                    postMap.put("iconStore",iconStore);
+                    PostsRef.child(current_user_id + timeOfImage).updateChildren(postMap).addOnSuccessListener (new OnSuccessListener () {
+                        @Override
+                        public void onSuccess (Object o) {
+
+                            Intent intent = new Intent (PostActivity.this, MainActivity.class);
+                            startActivity (intent);
+
+                            loadingBar.dismiss ();
+                            Toast.makeText (PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show ();
+
+                        }
+                    }).addOnFailureListener (new OnFailureListener () {
+                        @Override
+                        public void onFailure (@NonNull Exception e) {
+                            Toast.makeText (PostActivity.this, e.toString (), Toast.LENGTH_SHORT).show ();
+                        }
+                    });
 
 
-                                        Intent intent = new Intent(PostActivity.this, MainActivity.class);
-                                        startActivity(intent);
-
-                                        loadingBar.dismiss();
-                                        Toast.makeText(PostActivity.this, "הפוסט עודכן בהצלחה", Toast.LENGTH_SHORT).show();
-
-
-                                    } else {
-
-                                        loadingBar.dismiss();
-                                        Toast.makeText(PostActivity.this, "שגיאה בזמן עדכון הפוסט", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
 
 
                 }
@@ -439,7 +431,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText (PostActivity.this, databaseError.getMessage (), Toast.LENGTH_SHORT).show ();
             }
         });
     }

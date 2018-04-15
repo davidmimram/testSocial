@@ -32,7 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
     //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
+    private HashMap<String,Boolean> iconStore2;
+    private ArrayList<ImageView> iconImgArray;
+    private ArrayList<String> iconUid;
     SharedPreferences sharedpreference;
 
 
@@ -94,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        iconStore2 = new HashMap<> ();
+        iconUid = new ArrayList<> ();
+        iconImgArray = new ArrayList<> ();
 
         //--------comments---------//
 
@@ -101,21 +111,16 @@ public class MainActivity extends AppCompatActivity {
         //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
-        try {
-            currentUserID = mAuth.getCurrentUser().getUid();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        currentUserID = mAuth.getCurrentUser().getUid();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         bottomtab = (RelativeLayout) findViewById(R.id.mainbootom_app_bar);
         AddNewPostButton = (Button) findViewById(R.id.new_post_uploade);
         upProfileImage = (CircleImageView) findViewById(R.id.asProfile);
 
 
-        //shopicons:
-        shop1 = findViewById (R.id.shop1);
-        shop2 = findViewById (R.id.shop2);
-        shop3 = findViewById (R.id.shop3);
+
+
 
 
 
@@ -130,29 +135,23 @@ public class MainActivity extends AppCompatActivity {
 //        sendLikestofirebase();
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~29.3.2018~~~~~~~~~~~~~~
 
-        try {
+
             UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
 
-                        try {
                             String image = dataSnapshot.child("profileImage").getValue().toString();
                             Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile_ovel_two).into(upProfileImage);
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
                     }
-                }
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //~~~~~~~~~~~~~~~~~~~~~~new~~~~~~~~~~~~~~~~~~~~~~
 
@@ -261,27 +260,63 @@ public class MainActivity extends AppCompatActivity {
 
     private void DisplayallUserPost() {
 
-        try {
-            firebaseRecycleAdepter =
-                    new FirebaseRecyclerAdapter<Post, PostViewHolder>(
-                            Post.class,
-                            R.layout.posttrytwo,
-                            PostViewHolder.class,
-                            PostRef) {
-                        @Override
-                        protected void populateViewHolder(final PostViewHolder viewHolder, final Post model, int position) {
 
-                            //------new 3.4.2018------//
-                            final String post_key = getRef(position).getKey ();
+        firebaseRecycleAdepter =
+                new FirebaseRecyclerAdapter<Post, PostViewHolder> (
+                        Post.class,
+                        R.layout.posttrytwo,
+                        PostViewHolder.class,
+                        PostRef) {
+                    @Override
+                    protected void populateViewHolder (final PostViewHolder viewHolder, final Post model, int position) {
 
-                            //^^^^^^^^^^^^^^^^^^^^^^^^^//
+                        //------new 3.4.2018------//
+                        final String post_key = getRef (position).getKey ();
 
-                            viewHolder.setFullname(model.getFullname());
+                        //^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+                        viewHolder.setFullname (model.getFullName ());
                            /* viewHolder.setTime(model.getTime());
                             viewHolder.setDate(model.getDate());*/
-                            viewHolder.setDescription(model.getDescription());
-                            viewHolder.setProfileImage(getApplicationContext(), model.getProfileImage());
-                            viewHolder.setPostimage(getApplicationContext(), model.getPostimage());
+                        viewHolder.setDescription (model.getDescription ());
+                        viewHolder.setProfileImage (getApplicationContext (), model.getProfileImage ());
+                        viewHolder.setPostimage (getApplicationContext (), model.getPostimage ());
+
+                        iconStore2 = model.getIconStore ();
+
+
+                        ImageView shop1 = viewHolder.mView.findViewById (R.id.shop1);
+                        ImageView shop2 = viewHolder.mView.findViewById (R.id.shop2);
+                        ImageView shop3 = viewHolder.mView.findViewById (R.id.shop3);
+
+
+
+                        iconImgArray.add (shop1);
+                        iconImgArray.add (shop2);
+                        iconImgArray.add (shop3);
+
+                        if (!iconStore2.keySet ().isEmpty ()) {
+
+                            for (String s : iconStore2.keySet ()) {
+
+                                iconUid.add (s);
+                            }
+
+
+                            for (int i = 0; i < iconUid.size (); i++) {
+                                String s = iconUid.get (i);
+
+                                int identifier = getApplicationContext ().getResources ().getIdentifier (s, "drawable", getApplicationContext ().getPackageName ());
+
+                                if (iconImgArray.get (i) != null) {
+
+                                    iconImgArray.get (i).setImageResource (identifier);
+
+                                }
+
+
+                            }
+                        }
 
 
                             //------new 3.4.2018------//
@@ -349,9 +384,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             postList.setAdapter(firebaseRecycleAdepter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -532,6 +565,13 @@ public class MainActivity extends AppCompatActivity {
                     PostDate.setText("   " +date);
 
                 }*/
+
+        private static void setShopImage(ArrayList<ImageView> iconImgArray,HashMap<String,Boolean> iconStore2,ArrayList<String> iconUid,Context context,View mView) {
+
+
+        }
+
+
         public void setDescription(String description) {
             TextView Postdescription = (TextView) mView.findViewById(R.id.mainCommentText);
             Postdescription.setText(description);
@@ -543,9 +583,9 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttacher.update ();
-//            photoViewAttacher.getScale ();
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
+            photoViewAttacher.getScale ();
 
 
             //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
