@@ -7,9 +7,9 @@ import java.util.HashMap;
  */
 
 public class Post {
-    public String date, description, fullName, postimage, profileImage, time, uid;
-    int likecount;
-    public HashMap<String, Boolean> iconStore;
+    private String date, description, fullName, postimage, profileImage, time, uid;
+    private int likecount;
+    private HashMap<String, Boolean> iconStore;
 
 
 
@@ -17,7 +17,7 @@ public class Post {
     }
 
 
-    public Post (String date, String description, String fullName, String postimage, String profileImage, String time, String uid, int numOfLikes, HashMap<String, Boolean> iconStore,int likecount) {
+    public Post (String date, String description, String fullName, String postimage, String profileImage, String time, String uid, HashMap<String, Boolean> iconStore,int likecount) {
         this.date = date;
         this.description = description;
         this.fullName = fullName;

@@ -102,12 +102,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     //~~~~dvir 10.4.2018~~~~/
         iconStore = new HashMap<> ();
         counter = 0;
-        iconStore.put ("paulbear",false);
-        iconStore.put ("breshka",false);
-        iconStore.put ("castro",false);
-        iconStore.put ("zara",false);
-        iconStore.put ("factory",false);
-        iconStore.put ("mango",false);
+//        iconStore.put ("paulbear",false);
+//        iconStore.put ("breshka",false);
+//        iconStore.put ("castro",false);
+//        iconStore.put ("zara",false);
+//        iconStore.put ("factory",false);
+//        iconStore.put ("mango",false);
 
 
 
@@ -236,9 +236,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.zara:
                 //dvir king of the world! thank u !
 
-                    if (iconStore.get ("zara").equals (true)){
+                    if (iconStore.containsKey ("zara")){
                         zara.setImageResource (R.drawable.zara);
-                        iconStore.put ("zara",false);
+                        iconStore.put ("zara",null);
                         counter--;
                     } else if (counter < 3 ) {
                         iconStore.put ("zara",true);
@@ -252,9 +252,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 //
                 //dvir king of the world! thank u !
 
-                if (iconStore.get ("castro").equals (true)){
+                if (iconStore.containsKey ("castro")){
                     castro.setImageResource (R.drawable.castro);
-                    iconStore.put ("castro",false);
+                    iconStore.put ("castro",null);
                     counter--;
                 } else if (counter < 3 ) {
                     iconStore.put ("castro",true);
@@ -267,9 +267,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.pullbear:
 
                 //dvir king of the world! thank u !
-                if (iconStore.get ("paulbear").equals (true)){
+                if (iconStore.containsKey ("paulbear")){
                     pullbear.setImageResource (R.drawable.paulbear);
-                    iconStore.put ("paulbear",false);
+                    iconStore.put ("paulbear",null);
                     counter--;
                 } else if (counter < 3 ) {
                     iconStore.put ("paulbear",true);
@@ -283,9 +283,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.factory:
                 //dvir king of the world! thank u !
-                if (iconStore.get ("factory").equals (true)){
+                if (iconStore.containsKey ("factory")){
                     factory.setImageResource (R.drawable.factory);
-                    iconStore.put ("factory",false);
+                    iconStore.put ("factory",null);
                     counter--;
                 } else if (counter < 3 ) {
                     iconStore.put ("factory",true);
@@ -298,9 +298,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.breshka:
-                if (iconStore.get ("breshka").equals (true)){
+                if (iconStore.containsKey ("breshka")){
                     breshka.setImageResource (R.drawable.breshka);
-                    iconStore.put ("breshka",false);
+                    iconStore.put ("breshka",null);
                     counter--;
                 } else if (counter < 3 )
                 {
@@ -316,10 +316,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.mango:
                 //dvir king of the world! thank u !
-                if (iconStore.get ("mango").equals (true)){
+                if (iconStore.containsKey ("mango")){
 
                     mango.setImageResource (R.drawable.mango);
-                    iconStore.put ("mango",false);
+                    iconStore.put ("mango",null);
                     counter--;
                 } else if (counter < 3 ){
 
@@ -405,7 +405,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     postMap.put("profileImage", profileImage);
                     postMap.put("fullName", userFullName);
                     postMap.put("iconStore",iconStore);
-                    postMap.put ("Likecount",0);
+                    postMap.put ("likecount",0);
                     PostsRef.child(current_user_id + timeOfImage).updateChildren(postMap).addOnSuccessListener (new OnSuccessListener () {
                         @Override
                         public void onSuccess (Object o) {

@@ -1,12 +1,9 @@
 package ind.david.finalproject;
 
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,15 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     //------new 3.4.2018------//
     private DatabaseReference mDatabaseLike;
-    private DatabaseReference mDatabaseLikeCount;
 
 
     private boolean mProcessClickLike = false;
-
-    private ViewPager viewPager;
-
-    //iconpost
-    private ImageView shop1,shop2,shop3;
 
     private static final DecelerateInterpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator ();
     private  static final AccelerateDecelerateInterpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator ();
@@ -76,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String,Boolean> iconStore2;
     private ArrayList<ImageView> iconImgArray;
     private ArrayList<String> iconUid;
-    SharedPreferences sharedpreference;
 
 
 
@@ -94,13 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //------new 3.4.2018------//
+
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLike.keepSynced(true);
 
-        //14.4.2018
-        mDatabaseLikeCount = FirebaseDatabase.getInstance().getReference().child("Posts");
-        mDatabaseLikeCount.keepSynced(true);
+
 
 
 
@@ -108,10 +97,6 @@ public class MainActivity extends AppCompatActivity {
         iconUid = new ArrayList<> ();
         iconImgArray = new ArrayList<> ();
 
-        //--------comments---------//
-
-
-        //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 
 
@@ -152,15 +137,8 @@ public class MainActivity extends AppCompatActivity {
         postList.setLayoutManager(linearLayoutManager);
         postList.setAdapter(firebaseRecycleAdepter);
 
-
-
-
-
-
     }
 
-
-    // בדיקת כפתורים
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -220,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void DisplayallUserPost() {
 
-
         firebaseRecycleAdepter =
                 new FirebaseRecyclerAdapter<Post, PostViewHolder> (
                         Post.class,
@@ -241,12 +218,9 @@ public class MainActivity extends AppCompatActivity {
                         viewHolder.setDescription (model.getDescription ());
                         viewHolder.setProfileImage (getApplicationContext (), model.getProfileImage ());
                         viewHolder.setPostimage (getApplicationContext (), model.getPostimage ());
+                        viewHolder.likesCounts.setText (String.valueOf (model.getLikecount ()));
 
 
-                        //^^^^^^^^^^^^^^^^^^
-                        //14.4.2018
-                        viewHolder.setLikeacount (model.getLikecount ());
-//                        viewHolder.setLikeacount (model.getNumOfLikes ()); -- זה המקורי
 
 
 
@@ -255,15 +229,12 @@ public class MainActivity extends AppCompatActivity {
                         iconStore2 = model.getIconStore ();
 
 
-                        ImageView shop1 = viewHolder.mView.findViewById (R.id.shop1);
-                        ImageView shop2 = viewHolder.mView.findViewById (R.id.shop2);
-                        ImageView shop3 = viewHolder.mView.findViewById (R.id.shop3);
 
 
 
-                        iconImgArray.add (shop1);
-                        iconImgArray.add (shop2);
-                        iconImgArray.add (shop3);
+                        iconImgArray.add (viewHolder.shop1);
+                        iconImgArray.add (viewHolder.shop2);
+                        iconImgArray.add (viewHolder.shop3);
 
                         if (!iconStore2.keySet ().isEmpty ()) {
 
@@ -281,17 +252,31 @@ public class MainActivity extends AppCompatActivity {
                                 if (iconImgArray.get (i) != null) {
 
                                     iconImgArray.get (i).setImageResource (identifier);
+                                    iconImgArray.get (i).setVisibility (View.VISIBLE);
 
                                 }
-
-
                             }
                         }
 
 
-                            //------new 3.4.2018------//
-                            viewHolder.setmLikeBtn (post_key);
-                            //---todo---new 5.4.2018-----//
+                        viewHolder.mLikeBtn.setOnClickListener (new View.OnClickListener () {
+                            @Override
+                            public void onClick (View v) {
+                                if (!mProcessClickLike) {
+                                    PostRef.child (post_key).child ("likecount").setValue (model.getLikecount () + 1);
+                                            Picasso.with (getApplicationContext ()).load (R.drawable.btn_like_suggestiongrey).into (viewHolder.likeBtn);
+                                            mProcessClickLike = true;
+
+
+                                } else  {
+
+                                    PostRef.child (post_key).child ("likecount").setValue (model.getLikecount () - 1);
+                                            Picasso.with (getApplicationContext ()).load (R.drawable.btn_like_suggestion).into (viewHolder.likeBtn);
+                                            mProcessClickLike = false;
+                                        }
+                            }
+                        });
+
 
                             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -301,60 +286,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            viewHolder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v){
-
-                                    mProcessClickLike = true;
-
-                                    mDatabaseLikeCount .addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                        if (mProcessClickLike) {
-                                            Toast.makeText(MainActivity.this, "סימנת ״אהבתי״ - הפריט נשמר.", Toast.LENGTH_SHORT).show();
-
-                                            if (dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())) {
-
-                                                mDatabaseLikeCount.child (post_key).child (mAuth.getCurrentUser ().getUid ()).removeValue ();
-
-
-                                                //~~~~~~~14.4.2017~~~~~~//;
-                                                int likecount = 0;
-                                                mDatabaseLikeCount.child (post_key).child ("likecount").setValue (likecount -1);
-                                                likecount = dataSnapshot.child (post_key).child ("likecount").getValue (Integer.class);
-                                                //~~~-------------~~~~~//
-
-                                                mProcessClickLike = false;
-
-
-                                            } else {
-                                                mDatabaseLikeCount.child (post_key).child (mAuth.getCurrentUser ().getUid ()).setValue ("Like");
-
-                                                //~~~~~~~14.4.2017~~~~~~//;
-                                                int likecount = 0;
-                                                mDatabaseLikeCount.child (post_key).child ("likecount").setValue (likecount +1);
-                                                likecount = dataSnapshot.child (post_key).child ("likecount").getValue (Integer.class);
-                                                //~~~-------------~~~~~//
-
-                                                mProcessClickLike = false;
-
-
-
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-
-
-                                }
-                            });
 
 
                             //^^^^^^^^^^^^^^^^^^^^^^^^^//
@@ -380,7 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    ///ניסיון
 
 
 
@@ -390,22 +320,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+     // קלאס זה מציג את המידע של הפוסט כולו.
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-
-        //------new 3.4.2018------//
-
         ImageView mLikeBtn;
-        DatabaseReference mDatabaseLike;
-
-        //14.4.2018//
-        TextView tvlikeCount;
-        //--------//
-
-        FirebaseAuth mAuth;
-
-        //^^^^^^^^^^^^^^^^^^^^^^^^^//
+        TextView likesCounts;
+        TextView username;
+        ImageView imageView;
+        TextView Postdescription;
+        ImageView Postimage;
+        ImageView likeBtn;
+        ImageView shop1;
+        ImageView shop2;
+        ImageView shop3;
 
 
         public PostViewHolder(View itemView) {
@@ -413,121 +343,69 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
 
-            //------new 3.4.2018------//
             mLikeBtn = (ImageView) mView.findViewById(R.id.likeIcon);
-
-            mDatabaseLike = FirebaseDatabase.getInstance ().getReference ().child ("Likes");
-
-            mAuth = FirebaseAuth.getInstance ();
-
-            mDatabaseLike.keepSynced (true);
-        }
-
-
-
-
+            likesCounts = (TextView) mView.findViewById (R.id.tvlikenumbers);
+            username = (TextView) mView.findViewById(R.id.mainUserText);
+            imageView = mView.findViewById(R.id.mainUserImage);
+            Postdescription = (TextView) mView.findViewById(R.id.mainCommentText);
+            Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
+            likeBtn = mView.findViewById (R.id.likeIcon);
+            shop1 = mView.findViewById (R.id.shop1);
+            shop2 = mView.findViewById (R.id.shop2);
+            shop3 = mView.findViewById (R.id.shop3);
 
 
 
-        public void setmLikeBtn(final String post_key){
 
-
-            final AnimatorSet animatorSet = new AnimatorSet ();
-
-        mDatabaseLike.addValueEventListener (new ValueEventListener () {
-            @Override
-            public void onDataChange (DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.child (post_key).hasChild (mAuth.getCurrentUser ().getUid ())){
-
-
-                    mLikeBtn.setImageResource (R.drawable.btn_like_suggestion);
-
-
-                } else {
-                    mLikeBtn.setImageResource (R.drawable.btn_like_suggestiongrey);
-
-                }
-            }
-
-            @Override
-            public void onCancelled (DatabaseError databaseError) {
-
-            }
-        });
+//            mAuth = FirebaseAuth.getInstance ();
 
 
         }
-        //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
-
-        //14.4.2018
 
 
 
         public void setFullname(String fullname) {
 
-            TextView username = (TextView) mView.findViewById(R.id.mainUserText);
             username.setText(fullname);
         }
 
 
         public void setProfileImage(Context ctx, String profileImage) {
 
-            ImageView imageView = mView.findViewById(R.id.mainUserImage);
             Picasso.with(ctx).load(profileImage).into(imageView);
 
 
         }
 
 
-        private static void setShopImage(ArrayList<ImageView> iconImgArray,HashMap<String,Boolean> iconStore2,ArrayList<String> iconUid,Context context,View mView) {
-
-
-        }
-
-
         public void setDescription(String description) {
-            TextView Postdescription = (TextView) mView.findViewById(R.id.mainCommentText);
+
             Postdescription.setText(description);
 
         }
 
         public void setPostimage(Context ctx, String postimages) {
-            ImageView Postimage = (ImageView) mView.findViewById(R.id.mainPostImage);
+
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttacher.update ();
-//            photoViewAttacher.getScale ();
-
-
-            //todo להחזיר את הגודל המקורי של התמונה אחרי שעוזבים ולסדר את העלאה שהתמונות יעלו טוב
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
+            photoViewAttacher.getScale ();
 
 
          /*   Postimage.getLayoutParams().height = 321; // OR
             Postimage.getLayoutParams().width = 361;*/
         }
 
-        public void setLikeacount (Integer likecount) {
-
-
-            tvlikeCount = (TextView) mView.findViewById (R.id.tvlikenumbers);
-//            tvlikeCount.setText (Integer.toString (Integer.parseInt(String.valueOf (likecount))));
-//            tvlikeCount.setText (likecount);
-
-
-            tvlikeCount.setText (Integer.toString (Integer.parseInt(String.valueOf (likecount))));
-        }
     }
 
-    //--------firday----///
     private void SendUserToPostActivity() {
         Intent addNewPostIntent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(addNewPostIntent);
     }
-    //--------firday----///
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void SendUserToActivity() {
