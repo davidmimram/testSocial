@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private HashMap<String,Boolean> iconStore2;
-    private ArrayList<ImageView> iconImgArray;
     private ArrayList<String> iconUid;
 
 
@@ -80,23 +80,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-
-
-
-
-
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLike.keepSynced(true);
 
-
-
-
-
         iconStore2 = new HashMap<> ();
-        iconUid = new ArrayList<> ();
-        iconImgArray = new ArrayList<> ();
-
-
 
 
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -208,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //------new 3.4.2018------//
                         final String post_key = getRef (position).getKey ();
+                        int counter = 0;
 
                         //^^^^^^^^^^^^^^^^^^^^^^^^^//
 
@@ -220,27 +208,14 @@ public class MainActivity extends AppCompatActivity {
                         viewHolder.likesCounts.setText (String.valueOf (model.getLikecount ()));
 
 
-
-
-
                         //Icon Secssion:
                         //^^^^^^^^^^^^^^^^^^
                         iconStore2 = model.getIconStore ();
 
 
-
-
-
-                        iconImgArray.add (viewHolder.shop1);
-                        iconImgArray.add (viewHolder.shop2);
-                        iconImgArray.add (viewHolder.shop3);
-
                         if (!iconStore2.keySet ().isEmpty ()) {
-
-                            for (String s : iconStore2.keySet ()) {
-
-                                iconUid.add (s);
-                            }
+                            iconUid = new ArrayList<> ();
+                            iconUid.addAll (iconStore2.keySet ());
 
 
                             for (int i = 0; i < iconUid.size (); i++) {
@@ -248,12 +223,22 @@ public class MainActivity extends AppCompatActivity {
 
                                 int identifier = getApplicationContext ().getResources ().getIdentifier (s, "drawable", getApplicationContext ().getPackageName ());
 
-                                if (iconImgArray.get (i) != null) {
-
-                                    iconImgArray.get (i).setImageResource (identifier);
-                                    iconImgArray.get (i).setVisibility (View.VISIBLE);
-
-                                }
+                                    switch (counter){
+                                        case 0:
+                                            viewHolder.shop3.setImageResource (identifier);
+                                            viewHolder.shop3.setVisibility (View.VISIBLE);
+                                            counter++;
+                                            break;
+                                        case 1:
+                                            viewHolder.shop2.setImageResource (identifier);
+                                            viewHolder.shop2.setVisibility (View.VISIBLE);
+                                            counter++;
+                                            break;
+                                        case 2:
+                                            viewHolder.shop1.setImageResource (identifier);
+                                            viewHolder.shop1.setVisibility (View.VISIBLE);
+                                            break;
+                                    }
                             }
                         }
 
@@ -310,17 +295,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
      // קלאס זה מציג את המידע של הפוסט כולו.
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
@@ -335,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView shop1;
         ImageView shop2;
         ImageView shop3;
-
 
         public PostViewHolder(View itemView) {
 
@@ -353,12 +326,7 @@ public class MainActivity extends AppCompatActivity {
             shop2 = mView.findViewById (R.id.shop2);
             shop3 = mView.findViewById (R.id.shop3);
 
-
-
-
 //            mAuth = FirebaseAuth.getInstance ();
-
-
         }
 
 
@@ -389,9 +357,9 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(ctx).load(postimages).into(Postimage);
 
             // זום אין לתמונת פוסט zoom
-//            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttachegitr.update ();
-//            photoViewAttacher.getScale ();
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
+            photoViewAttacher.update ();
+            photoViewAttacher.getScale ();
 
 
          /*   Postimage.getLayoutParams().height = 321; // OR
