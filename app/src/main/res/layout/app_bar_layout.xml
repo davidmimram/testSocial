@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        app:srcCompat="@drawable/line" />
+        app:srcCompat="@drawable/lineclosetab" />
 
 
 

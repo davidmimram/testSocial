@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
             // זום אין לתמונת פוסט zoom
 //            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher (Postimage);
-//            photoViewAttacher.update ();
+//            photoViewAttachegitr.update ();
 //            photoViewAttacher.getScale ();
 
 
